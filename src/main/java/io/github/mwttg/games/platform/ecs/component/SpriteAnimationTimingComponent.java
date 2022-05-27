@@ -4,18 +4,22 @@ import java.util.List;
 import java.util.Objects;
 import java.util.StringJoiner;
 
-public class AnimationTimingComponent {
+/**
+ * A data container (or state) for Sprite animations. The delay of each frame is defined by the {@link List}
+ * delaysInMs (The items in that list, the size, also defines how many frames are existing for this animation).
+ */
+public class SpriteAnimationTimingComponent {
 
   private final List<Integer> delaysInMs;
   private final int maxSprites;
   private int currentFrame;
   private long lastTick;
 
-  public AnimationTimingComponent(final List<Integer> delaysInMs) {
+  public SpriteAnimationTimingComponent(final List<Integer> delaysInMs) {
     this(delaysInMs, 0);
   }
 
-  public AnimationTimingComponent(final List<Integer> delaysInMs, final int currentFrame) {
+  public SpriteAnimationTimingComponent(final List<Integer> delaysInMs, final int currentFrame) {
     this.delaysInMs = delaysInMs;
     this.currentFrame = currentFrame;
     this.maxSprites = delaysInMs.size();
@@ -45,7 +49,7 @@ public class AnimationTimingComponent {
     if (this == o) {
       return true;
     }
-    if (!(o instanceof AnimationTimingComponent that)) {
+    if (!(o instanceof SpriteAnimationTimingComponent that)) {
       return false;
     }
     return maxSprites == that.maxSprites && currentFrame == that.currentFrame && lastTick == that.lastTick
@@ -59,7 +63,7 @@ public class AnimationTimingComponent {
 
   @Override
   public String toString() {
-    return new StringJoiner(", ", AnimationTimingComponent.class.getSimpleName() + "[", "]")
+    return new StringJoiner(", ", SpriteAnimationTimingComponent.class.getSimpleName() + "[", "]")
         .add("delaysInMs=" + delaysInMs)
         .add("maxSprites=" + maxSprites)
         .add("currentFrame=" + currentFrame)

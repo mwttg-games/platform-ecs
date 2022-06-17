@@ -1,4 +1,4 @@
-package io.github.mwttg.games.platform.ecs.component;
+package io.github.mwttg.games.platform.ecs.component.draw;
 
 import java.util.List;
 import java.util.Objects;

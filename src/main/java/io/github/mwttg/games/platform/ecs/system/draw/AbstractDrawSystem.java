@@ -1,4 +1,4 @@
-package io.github.mwttg.games.platform.ecs.system;
+package io.github.mwttg.games.platform.ecs.system.draw;
 
 import org.lwjgl.opengl.GL41;
 

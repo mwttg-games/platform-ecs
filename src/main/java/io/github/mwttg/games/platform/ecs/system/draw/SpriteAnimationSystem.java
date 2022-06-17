@@ -1,8 +1,8 @@
-package io.github.mwttg.games.platform.ecs.system;
+package io.github.mwttg.games.platform.ecs.system.draw;
 
 import io.github.mwttg.games.opengl.basic.utilities.geometry.MeshFactory;
-import io.github.mwttg.games.platform.ecs.component.SpriteAnimationComponent;
-import io.github.mwttg.games.platform.ecs.component.SpriteComponent;
+import io.github.mwttg.games.platform.ecs.component.draw.SpriteAnimationComponent;
+import io.github.mwttg.games.platform.ecs.component.draw.SpriteComponent;
 import org.joml.Matrix4f;
 import org.lwjgl.opengl.GL41;
 

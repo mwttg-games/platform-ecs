@@ -1,7 +1,7 @@
-package io.github.mwttg.games.platform.ecs.component;
+package io.github.mwttg.games.platform.ecs.component.draw;
 
 import io.github.mwttg.games.opengl.basic.utilities.uniform.TexturedUniforms;
-import io.github.mwttg.games.platform.ecs.system.SpriteAnimationSystem;
+import io.github.mwttg.games.platform.ecs.system.draw.SpriteAnimationSystem;
 import java.util.List;
 import java.util.Objects;
 import java.util.StringJoiner;

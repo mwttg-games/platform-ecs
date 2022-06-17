@@ -1,10 +1,10 @@
-package io.github.mwttg.games.platform.ecs.component;
+package io.github.mwttg.games.platform.ecs.component.draw;
 
 import io.github.mwttg.games.opengl.basic.utilities.buffer.VertexArrayObject;
 import io.github.mwttg.games.opengl.basic.utilities.shader.Shader;
 import io.github.mwttg.games.opengl.basic.utilities.shader.ShaderProgram;
 import io.github.mwttg.games.opengl.basic.utilities.uniform.TexturedUniforms;
-import io.github.mwttg.games.platform.ecs.system.SpriteSystem;
+import io.github.mwttg.games.platform.ecs.system.draw.SpriteSystem;
 
 /**
  * A data container which is needed for drawing a plane (2 triangles) with a texture on it (a Sprite). This data container is

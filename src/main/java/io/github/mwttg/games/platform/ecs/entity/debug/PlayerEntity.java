@@ -63,6 +63,8 @@ public record PlayerEntity(long windowId,
         deltaTime);
   }
 
+
+
   public void updateRender(final Matrix4f viewMatrix, final Matrix4f projectionMatrix) {
     SpriteSystem.draw(spriteComponent, transformComponent.getModelMatrix(), viewMatrix, projectionMatrix);
   }

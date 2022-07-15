@@ -17,6 +17,10 @@ public class TransformComponent {
     this.modelMatrix = new Matrix4f().translate(x, y, 0.0f);
   }
 
+  public TransformComponent(final float x, final float y, final float z) {
+    this.modelMatrix = new Matrix4f().translate(x, y, z);
+  }
+
   public Matrix4f getModelMatrix() {
     return modelMatrix;
   }

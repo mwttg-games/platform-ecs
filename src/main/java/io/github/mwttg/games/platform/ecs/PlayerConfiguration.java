@@ -1,11 +1,12 @@
 package io.github.mwttg.games.platform.ecs;
 
-public record PlayerConfiguration(float horizontalVelocity) {
+public record PlayerConfiguration(float walkVelocity, float initialJumpVelocity) {
 
   public String prettyPrint() {
     return """
             + Player configuration
-                Horizontal Velocity ............. %s
-        """.formatted(horizontalVelocity);
+                Walk Velocity ................... %s
+                Initial Jump Velocity ........... %s
+        """.formatted(walkVelocity, initialJumpVelocity);
   }
 }

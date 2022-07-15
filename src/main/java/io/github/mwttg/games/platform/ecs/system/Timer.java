@@ -12,6 +12,11 @@ public class Timer {
     this.lastTick = System.currentTimeMillis();
   }
 
+  public float getDuration() {
+    final var currentTick = System.currentTimeMillis();
+    return (currentTick - lastTick) / 1000.0f;
+  }
+
   // get delta time in seconds AND reset lastTick
   public float getDeltaTime() {
     final var currentTick = System.currentTimeMillis();

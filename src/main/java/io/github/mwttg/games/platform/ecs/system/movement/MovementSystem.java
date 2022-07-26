@@ -3,6 +3,7 @@ package io.github.mwttg.games.platform.ecs.system.movement;
 import io.github.mwttg.games.platform.ecs.GameState;
 import io.github.mwttg.games.platform.ecs.component.input.PlayerInputComponent;
 import io.github.mwttg.games.platform.ecs.component.movement.CollisionSensorComponent;
+import io.github.mwttg.games.platform.ecs.component.movement.EntityTileSize;
 import io.github.mwttg.games.platform.ecs.component.movement.MovementStateComponent;
 import io.github.mwttg.games.platform.ecs.component.movement.SolidGridComponent;
 import io.github.mwttg.games.platform.ecs.component.movement.TransformComponent;
@@ -24,6 +25,10 @@ public class MovementSystem {
     HorizontalMovementSystem.update(playerInputComponent, velocityComponent, movementStateComponent, gameState);
     VerticalMovementSystem.update(playerInputComponent, velocityComponent, movementStateComponent, gameState);
     MovementStateSystem.update(movementStateComponent, transformComponent, velocityComponent, deltaTime, gameState);
-    MovementCollisionSystem.update(transformComponent, movementStateComponent, collisionSensorComponent, solidGridComponent);
+
+
+    final var tileSize = new EntityTileSize(1.0f, 1.0f);
+    final var blockedDirections = SolidGridSystem.getBlockedDirections(solidGridComponent, transformComponent, tileSize);
+    MovementCollisionSystem.update(tileSize, blockedDirections, transformComponent.getModelMatrix(), movementStateComponent);
   }
 }

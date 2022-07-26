@@ -29,14 +29,6 @@ public class SolidGridComponent {
     this.width = grid.get(0).size();
   }
 
-  private int get(final int x, final int y) {
-    if (x >= 0 && x < width && y >= 0 && y < height) {
-      return grid.get(y).get(x);
-    } else {
-      return -1; // hmm ...
-    }
-  }
-
   public boolean isBlocked(final Vector2f position) {
     final var x = (int) position.x();
     final var y = (int) position.y();
@@ -45,30 +37,6 @@ public class SolidGridComponent {
     } else {
       return true;
     }
-  }
-
-  public record BlockedNeighbours(boolean up, boolean down, boolean left, boolean right) {
-  }
-
-  public BlockedNeighbours getBlockedNeighboursOf(final int x, final int y) {
-    final var up = get(x, y - 1) != WALKABLE;
-    final var down = get(x, y + 1) != WALKABLE;
-    final var left = get(x - 1, y) != WALKABLE;
-    final var right = get(x + 1, y) != WALKABLE;
-
-    return new BlockedNeighbours(up, down, left, right);
-  }
-
-  public List<List<Integer>> getGrid() {
-    return grid;
-  }
-
-  public int getWidth() {
-    return width;
-  }
-
-  public int getHeight() {
-    return height;
   }
 
   @Override

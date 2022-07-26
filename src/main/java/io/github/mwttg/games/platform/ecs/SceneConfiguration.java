@@ -1,12 +1,12 @@
 package io.github.mwttg.games.platform.ecs;
 
-public record SceneConfiguration(float verticalUpVelocity, float verticalDownVelocity) {
+public record SceneConfiguration(float verticalUpGravity, float verticalDownGravity) {
 
   public String prettyPrint() {
     return """
             + Scene configuration
-                Vertical Up Velocity ............ %s
-                Vertical Down Velocity .......... %s
-        """.formatted(verticalUpVelocity, verticalDownVelocity);
+                Vertical Gravity (up) ........... %s
+                Vertical Gravity (down) ......... %s
+        """.formatted(verticalUpGravity, verticalDownGravity);
   }
 }

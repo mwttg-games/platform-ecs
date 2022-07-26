@@ -1,20 +1,20 @@
 package io.github.mwttg.games.platform.ecs.system.movement;
 
 import io.github.mwttg.games.platform.ecs.GameState;
-import io.github.mwttg.games.platform.ecs.component.movement.MovementStateComponent;
+import io.github.mwttg.games.platform.ecs.component.movement.MovementState;
 
 class ActionJump {
 
   private ActionJump() {
   }
 
-  static float getDeltaDistanceY(final MovementStateComponent movementStateComponent,
+  static float getDeltaDistanceY(final MovementState movementState,
                                  final GameState gameState,
                                  final float deltaTime) {
-    movementStateComponent.updateJumpTiming(deltaTime);
+    movementState.updateJumpTiming(deltaTime);
 
-    final var currentDuration = movementStateComponent.getJumpTimings().getCurrentDuration();
-    final var lastDuration = movementStateComponent.getJumpTimings().getLastDuration();
+    final var currentDuration = movementState.getJumpTimings().getCurrentDuration();
+    final var lastDuration = movementState.getJumpTimings().getLastDuration();
     final var upGravity = gameState.sceneConfiguration().verticalUpGravity();
     final var initJumpVelocity = gameState.playerConfiguration().initialJumpVelocity();
 

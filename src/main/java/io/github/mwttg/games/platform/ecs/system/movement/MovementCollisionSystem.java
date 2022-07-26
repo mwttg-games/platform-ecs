@@ -1,7 +1,7 @@
 package io.github.mwttg.games.platform.ecs.system.movement;
 
 import io.github.mwttg.games.platform.ecs.component.movement.BlockedDirections;
-import io.github.mwttg.games.platform.ecs.component.movement.MovementStateComponent;
+import io.github.mwttg.games.platform.ecs.component.movement.MovementState;
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
@@ -13,7 +13,7 @@ class MovementCollisionSystem {
 
   static Vector3f getCorrectionTranslation(final BlockedDirections blockedDirections,
                                            final Matrix4f transform,
-                                           final MovementStateComponent movementStateComponent) {
+                                           final MovementState movementState) {
     final var position = getPosition(transform);
 
     float x = 0.0f;
@@ -21,26 +21,26 @@ class MovementCollisionSystem {
 
     if (blockedDirections.top()) {
       y = -(position.y() - (int) position.y());
-      movementStateComponent.activateFalling();
+      movementState.activateFalling();
     }
 
     if (blockedDirections.bottom()) {
       y = ((int) position.y() + 1.0f) - position.y();
-      movementStateComponent.deactivateFalling();
+      movementState.deactivateFalling();
     }
 
-    if (!blockedDirections.bottom() && !movementStateComponent.isJumping()) {
-      movementStateComponent.activateFalling();
+    if (!blockedDirections.bottom() && !movementState.isJumping()) {
+      movementState.activateFalling();
     }
 
     if (blockedDirections.left()) {
       x = ((int) position.x() + 1.0f) - position.x();
-      movementStateComponent.activateFalling();
+      movementState.activateFalling();
     }
 
     if (blockedDirections.right()) {
       x = -(position.x() - (int) position.x());
-      movementStateComponent.activateFalling();
+      movementState.activateFalling();
     }
 
     return new Vector3f(x, y, 0.0f);

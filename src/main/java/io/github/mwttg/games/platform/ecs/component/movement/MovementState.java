@@ -8,21 +8,23 @@ public class MovementState {
   private final Timings fallTimings;
   private final Timings jumpTimings;
 
-  private boolean idle;
   private boolean falling;
   private boolean walkingLeft;
   private boolean walkingRight;
   private boolean jumping;
 
+  private Direction lastDirection;
+
   public MovementState() {
     this.fallTimings = new Timings();
     this.jumpTimings = new Timings();
 
-    this.idle = false;
     this.falling = true;
     this.walkingLeft = false;
     this.walkingRight = false;
     this.jumping = false;
+
+    lastDirection = Direction.RIGHT;
   }
 
   public void updateFallTiming(final float deltaTime) {
@@ -54,11 +56,13 @@ public class MovementState {
   }
 
   public void activateWalkingLeft() {
+    lastDirection = Direction.LEFT;
     walkingLeft = true;
     walkingRight = false;
   }
 
   public void activateWalkingRight() {
+    lastDirection = Direction.RIGHT;
     walkingRight = true;
     walkingLeft = false;
   }
@@ -74,10 +78,6 @@ public class MovementState {
 
   public Timings getJumpTimings() {
     return jumpTimings;
-  }
-
-  public boolean isIdle() {
-    return idle;
   }
 
   public boolean isFalling() {
@@ -96,6 +96,10 @@ public class MovementState {
     return jumping;
   }
 
+  public Direction getLastDirection() {
+    return lastDirection;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -104,14 +108,14 @@ public class MovementState {
     if (!(o instanceof MovementState that)) {
       return false;
     }
-    return idle == that.idle && falling == that.falling && walkingLeft == that.walkingLeft &&
-        walkingRight == that.walkingRight &&
-        jumping == that.jumping && fallTimings.equals(that.fallTimings) && jumpTimings.equals(that.jumpTimings);
+    return falling == that.falling && walkingLeft == that.walkingLeft && walkingRight == that.walkingRight &&
+        jumping == that.jumping && fallTimings.equals(that.fallTimings) && jumpTimings.equals(that.jumpTimings) &&
+        lastDirection == that.lastDirection;
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(fallTimings, jumpTimings, idle, falling, walkingLeft, walkingRight, jumping);
+    return Objects.hash(fallTimings, jumpTimings, falling, walkingLeft, walkingRight, jumping, lastDirection);
   }
 
   @Override
@@ -119,11 +123,11 @@ public class MovementState {
     return new StringJoiner(", ", MovementState.class.getSimpleName() + "[", "]")
         .add("fallTimings=" + fallTimings)
         .add("jumpTimings=" + jumpTimings)
-        .add("idle=" + idle)
         .add("falling=" + falling)
         .add("walkingLeft=" + walkingLeft)
         .add("walkingRight=" + walkingRight)
         .add("jumping=" + jumping)
+        .add("lastDirection=" + lastDirection)
         .toString();
   }
 }

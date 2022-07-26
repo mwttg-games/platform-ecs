@@ -35,12 +35,12 @@ class MovementCollisionSystem {
 
     if (blockedDirections.left()) {
       x = ((int) position.x() + 1.0f) - position.x();
-      movementState.activateFalling();
+     //  movementState.activateFalling();
     }
 
     if (blockedDirections.right()) {
       x = -(position.x() - (int) position.x());
-      movementState.activateFalling();
+      // movementState.activateFalling();
     }
 
     return new Vector3f(x, y, 0.0f);

@@ -1,4 +1,4 @@
 package io.github.mwttg.games.platform.ecs.component.movement;
 
-public record EntityTileSize(float width, float height) {
+public record TileSize(float width, float height) {
 }

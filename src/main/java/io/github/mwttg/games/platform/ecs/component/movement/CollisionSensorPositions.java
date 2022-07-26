@@ -27,7 +27,7 @@ public record CollisionSensorPositions(
   private static final float MARGIN = 0.25f;
 
   // the transform is usually the bottom left corner NOT the tile center
-  public static CollisionSensorPositions get(final EntityTileSize tileSize, final Vector3f transform) {
+  public static CollisionSensorPositions get(final TileSize tileSize, final Vector3f transform) {
     final var width = tileSize.width();
     final var height = tileSize.height();
     final var x = transform.x();

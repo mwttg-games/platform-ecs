@@ -1,30 +1,26 @@
 package io.github.mwttg.games.platform.ecs.system.movement;
 
 import io.github.mwttg.games.platform.ecs.component.movement.BlockedDirections;
-import io.github.mwttg.games.platform.ecs.component.movement.EntityTileSize;
 import io.github.mwttg.games.platform.ecs.component.movement.MovementStateComponent;
-import io.github.mwttg.games.platform.ecs.component.movement.TransformComponent;
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-public class MovementCollisionSystem {
+class MovementCollisionSystem {
 
-  private static final Logger LOG = LoggerFactory.getLogger(MovementCollisionSystem.class);
+  private MovementCollisionSystem() {
+  }
 
-  public static void update(final EntityTileSize entityTileSize,
-                            final BlockedDirections blockedDirections,
-                            final Matrix4f transform,
-                            final MovementStateComponent movementStateComponent) {
+  static Vector3f getCorrectionTranslation(final BlockedDirections blockedDirections,
+                                           final Matrix4f transform,
+                                           final MovementStateComponent movementStateComponent) {
     final var position = getPosition(transform);
 
     float x = 0.0f;
     float y = 0.0f;
 
     if (blockedDirections.top()) {
-      y =  - (position.y() - (int) position.y());
+      y = -(position.y() - (int) position.y());
       movementStateComponent.activateFalling();
     }
 
@@ -43,12 +39,11 @@ public class MovementCollisionSystem {
     }
 
     if (blockedDirections.right()) {
-      x = - (position.x() - (int) position.x());
+      x = -(position.x() - (int) position.x());
       movementStateComponent.activateFalling();
     }
 
-    LOG.info("blockedDirections = {} position = {} x = {} y = {}", blockedDirections, position, x, y);
-    transform.translate(x, y, 0.0f); // mutable call (call by reference)
+    return new Vector3f(x, y, 0.0f);
   }
 
 

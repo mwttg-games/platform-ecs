@@ -1,34 +1,32 @@
 package io.github.mwttg.games.platform.ecs.system.movement;
 
 import io.github.mwttg.games.platform.ecs.GameState;
-import io.github.mwttg.games.platform.ecs.component.input.PlayerInputComponent;
-import io.github.mwttg.games.platform.ecs.component.movement.CollisionSensorComponent;
-import io.github.mwttg.games.platform.ecs.component.movement.EntityTileSize;
 import io.github.mwttg.games.platform.ecs.component.movement.MovementStateComponent;
 import io.github.mwttg.games.platform.ecs.component.movement.SolidGridComponent;
-import io.github.mwttg.games.platform.ecs.component.movement.TransformComponent;
-import io.github.mwttg.games.platform.ecs.component.movement.VelocityComponent;
+import io.github.mwttg.games.platform.ecs.component.movement.TileSize;
 import io.github.mwttg.games.platform.ecs.system.input.PlayerInputSystem;
+import org.joml.Matrix4f;
 
 public class MovementSystem {
 
+  private MovementSystem() {
+  }
+
   public static void update(final long windowId,
-                            final PlayerInputComponent playerInputComponent,
-                            final TransformComponent transformComponent,
-                            final VelocityComponent velocityComponent,
+                            final Matrix4f transform,
+                            final TileSize tileSize,
                             final MovementStateComponent movementStateComponent,
-                            final CollisionSensorComponent collisionSensorComponent,
                             final SolidGridComponent solidGridComponent,
                             final float deltaTime,
                             final GameState gameState) {
-    PlayerInputSystem.update(windowId, playerInputComponent);
-    HorizontalMovementSystem.update(playerInputComponent, velocityComponent, movementStateComponent, gameState);
-    VerticalMovementSystem.update(playerInputComponent, velocityComponent, movementStateComponent, gameState);
-    MovementStateSystem.update(movementStateComponent, transformComponent, velocityComponent, deltaTime, gameState);
-
-
-    final var tileSize = new EntityTileSize(1.0f, 1.0f);
-    final var blockedDirections = SolidGridSystem.getBlockedDirections(solidGridComponent, transformComponent, tileSize);
-    MovementCollisionSystem.update(tileSize, blockedDirections, transformComponent.getModelMatrix(), movementStateComponent);
+    final var playerAction = PlayerInputSystem.getPlayerAction(windowId);
+    final var horizontalVelocity = HorizontalVelocitySystem.getHorizontalVelocity(playerAction, gameState);
+    MovementStateSystem.setState(movementStateComponent, horizontalVelocity, playerAction);
+    final var delta = DeltaMovementSystem.update(movementStateComponent, horizontalVelocity, deltaTime, gameState);
+    transform.translate(delta); // mutable
+    final var blockedDirections = SolidGridSystem.getBlockedDirections(solidGridComponent, transform, tileSize);
+    final var correction =
+        MovementCollisionSystem.getCorrectionTranslation(blockedDirections, transform, movementStateComponent);
+    transform.translate(correction);
   }
 }

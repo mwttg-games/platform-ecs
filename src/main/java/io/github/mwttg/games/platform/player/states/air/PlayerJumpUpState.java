@@ -14,9 +14,4 @@ public abstract class PlayerJumpUpState extends PlayerInAirState {
                            final PlayerData playerData) {
     super(animationComponentByName, playerStateComponent, transform, playerData);
   }
-
-  @Override
-  public void exit() {
-    // nothing to do
-  }
 }

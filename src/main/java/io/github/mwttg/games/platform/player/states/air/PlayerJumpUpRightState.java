@@ -1,7 +1,7 @@
 package io.github.mwttg.games.platform.player.states.air;
 
+import io.github.mwttg.games.platform.Configuration;
 import io.github.mwttg.games.platform.draw.SpriteAnimationComponent;
-import io.github.mwttg.games.platform.player.Configuration;
 import io.github.mwttg.games.platform.player.FacingDirection;
 import io.github.mwttg.games.platform.player.PlayerData;
 import io.github.mwttg.games.platform.player.PlayerStateComponent;

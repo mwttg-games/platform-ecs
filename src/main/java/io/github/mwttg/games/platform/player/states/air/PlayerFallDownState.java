@@ -17,11 +17,6 @@ public abstract class PlayerFallDownState extends PlayerInAirState {
     super(animationComponentByName, playerStateComponent, transform, playerData);
   }
 
-  @Override
-  public void exit() {
-    // nothing to do
-  }
-
   protected void handleStateTransitions(final Vector2i inputVector, final boolean onGround) {
     if (onGround && inputVector.x() == 1) {
       getPlayerStateComponent().switchToWalkRightState();

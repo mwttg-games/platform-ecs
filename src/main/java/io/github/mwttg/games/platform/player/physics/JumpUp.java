@@ -1,7 +1,7 @@
 package io.github.mwttg.games.platform.player.physics;
 
-import static io.github.mwttg.games.platform.player.Configuration.JUMP_UP_GRAVITY;
-import static io.github.mwttg.games.platform.player.Configuration.PLAYER_JUMP_VELOCITY;
+import static io.github.mwttg.games.platform.Configuration.JUMP_UP_GRAVITY;
+import static io.github.mwttg.games.platform.Configuration.PLAYER_JUMP_VELOCITY;
 
 import io.github.mwttg.games.platform.player.PlayerData;
 import io.github.mwttg.games.platform.player.SolidGridComponent;

@@ -7,10 +7,10 @@ import io.github.mwttg.games.platform.player.states.air.PlayerFallDownRightState
 import io.github.mwttg.games.platform.player.states.air.PlayerInAirState;
 import io.github.mwttg.games.platform.player.states.air.PlayerJumpUpLeftState;
 import io.github.mwttg.games.platform.player.states.air.PlayerJumpUpRightState;
-import io.github.mwttg.games.platform.player.states.onground.PlayerIdleLeftState;
-import io.github.mwttg.games.platform.player.states.onground.PlayerIdleRightState;
-import io.github.mwttg.games.platform.player.states.onground.PlayerWalkLeftState;
-import io.github.mwttg.games.platform.player.states.onground.PlayerWalkRightState;
+import io.github.mwttg.games.platform.player.states.ground.PlayerIdleLeftState;
+import io.github.mwttg.games.platform.player.states.ground.PlayerIdleRightState;
+import io.github.mwttg.games.platform.player.states.ground.PlayerWalkLeftState;
+import io.github.mwttg.games.platform.player.states.ground.PlayerWalkRightState;
 import java.util.Map;
 import org.joml.Matrix4f;
 

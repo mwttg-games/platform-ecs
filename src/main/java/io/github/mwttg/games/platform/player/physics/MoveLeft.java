@@ -1,6 +1,6 @@
 package io.github.mwttg.games.platform.player.physics;
 
-import io.github.mwttg.games.platform.player.Configuration;
+import io.github.mwttg.games.platform.Configuration;
 import io.github.mwttg.games.platform.player.PlayerData;
 import io.github.mwttg.games.platform.player.SolidGridComponent;
 import io.github.mwttg.games.platform.player.SolidGridSystem;

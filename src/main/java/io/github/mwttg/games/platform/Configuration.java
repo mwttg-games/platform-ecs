@@ -1,4 +1,4 @@
-package io.github.mwttg.games.platform.player;
+package io.github.mwttg.games.platform;
 
 
 // todo transform to singleton - fields get init by config file... method calls where constants are used

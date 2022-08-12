@@ -1,4 +1,4 @@
-package io.github.mwttg.games.platform.player.states.onground;
+package io.github.mwttg.games.platform.player.states.ground;
 
 import io.github.mwttg.games.platform.draw.SpriteAnimationComponent;
 import io.github.mwttg.games.platform.player.FacingDirection;

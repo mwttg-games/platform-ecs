@@ -46,7 +46,7 @@ public final class PlayerWalkLeftState extends PlayerWalkState {
     }
 
     if (inputVector.y() == 1) {
-      getPlayerStateComponent().switchToIdleLeftState();
+      getPlayerStateComponent().switchToJumpUpLeftState();
     }
 
     final var onGround = SolidGridSystem.isGroundTouched(getTransform(), getPlayerData().getTileSize(), solidGridComponent);

@@ -19,6 +19,16 @@ public abstract class PlayerIdleState extends PlayerOnGroundState {
   }
 
   @Override
+  public void enter() {
+    super.enter();
+  }
+
+  @Override
+  public void exit() {
+    super.exit();
+  }
+
+  @Override
   public void update(final float deltaTime, final Vector2i inputVector, final SolidGridComponent solidGridComponent) {
     // nothing to do
   }

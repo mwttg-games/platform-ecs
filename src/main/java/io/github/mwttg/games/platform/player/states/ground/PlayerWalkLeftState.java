@@ -27,7 +27,13 @@ public final class PlayerWalkLeftState extends PlayerWalkState {
 
   @Override
   public void enter() {
+    super.enter();
     getPlayerData().setFacingDirection(FacingDirection.LEFT);
+  }
+
+  @Override
+  public void exit() {
+    super.exit();
   }
 
   @Override

@@ -21,11 +21,12 @@ public abstract class PlayerInAirState extends AbstractPlayerState {
 
   @Override
   public void exit() {
-    // nothing to do
+    super.exit();
   }
 
   @Override
   public void enter() {
+    super.enter();
     inAirTime = 0.0f;
   }
 

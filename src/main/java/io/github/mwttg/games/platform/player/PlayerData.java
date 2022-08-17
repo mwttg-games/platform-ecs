@@ -1,18 +1,16 @@
 package io.github.mwttg.games.platform.player;
 
-import java.util.Objects;
-import java.util.StringJoiner;
-
 public class PlayerData {
 
   private FacingDirection facingDirection;
   private final TileSize tileSize;
+  private int currentJumpCounter;
   // more to add like activated power ups, stats (in subclasses etc.)
-
 
   public PlayerData() {
     this.facingDirection = FacingDirection.RIGHT;
     this.tileSize = new TileSize(1.0f, 1.0f);
+    this.currentJumpCounter = 0;
   }
 
   public FacingDirection getFacingDirection() {
@@ -27,27 +25,11 @@ public class PlayerData {
     return tileSize;
   }
 
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (!(o instanceof PlayerData that)) {
-      return false;
-    }
-    return facingDirection == that.facingDirection && tileSize.equals(that.tileSize);
+  public int getCurrentJumpCounter() {
+    return currentJumpCounter;
   }
 
-  @Override
-  public int hashCode() {
-    return Objects.hash(facingDirection, tileSize);
-  }
-
-  @Override
-  public String toString() {
-    return new StringJoiner(", ", PlayerData.class.getSimpleName() + "[", "]")
-        .add("facingDirection=" + facingDirection)
-        .add("tileSize=" + tileSize)
-        .toString();
+  public void resetCurrentJumpCounter() {
+    currentJumpCounter = 0;
   }
 }

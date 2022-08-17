@@ -33,6 +33,11 @@ public final class PlayerFallDownLeftState extends PlayerFallDownState {
   }
 
   @Override
+  public void exit() {
+    super.exit();
+  }
+
+  @Override
   public void update(final float deltaTime, final Vector2i inputVector, final SolidGridComponent solidGridComponent) {
     if (inputVector.x() == -1) {
       MoveLeft.execute(deltaTime, getPlayerData(), getTransform(), solidGridComponent);

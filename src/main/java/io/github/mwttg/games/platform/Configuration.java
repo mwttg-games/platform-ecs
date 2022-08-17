@@ -10,4 +10,5 @@ public interface Configuration {
   float FALL_DOWN_GRAVITY = 35.0f;
   float PLAYER_MAX_RISE_TIME = PLAYER_JUMP_VELOCITY / JUMP_UP_GRAVITY;
   int PLAYER_MAX_JUMP_AMOUNT = 2;
+  float COYOTE_TIME = 0.14f;
 }

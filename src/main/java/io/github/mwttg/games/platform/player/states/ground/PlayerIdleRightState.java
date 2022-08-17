@@ -23,6 +23,12 @@ public final class PlayerIdleRightState extends PlayerIdleState {
 
   @Override
   public void enter() {
+    super.enter();
     getPlayerData().setFacingDirection(FacingDirection.RIGHT);
+  }
+
+  @Override
+  public void exit() {
+    super.exit();
   }
 }

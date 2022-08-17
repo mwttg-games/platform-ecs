@@ -27,6 +27,14 @@ public abstract class AbstractPlayerState implements PlayerState {
   protected abstract String getAnimationName();
 
   @Override
+  public void enter() {
+  }
+
+  @Override
+  public void exit() {
+  }
+
+  @Override
   public void draw(final Matrix4f model, final Matrix4f view, final Matrix4f projection) {
     final var animation = animationComponentByName.get(getAnimationName());
     SpriteAnimationSystem.draw(animation, model, view, projection);

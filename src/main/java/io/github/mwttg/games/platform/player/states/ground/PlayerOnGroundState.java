@@ -17,7 +17,12 @@ public abstract class PlayerOnGroundState extends AbstractPlayerState {
   }
 
   @Override
+  public void enter() {
+    super.enter();
+  }
+
+  @Override
   public void exit() {
-    // nothing to do
+    super.exit();
   }
 }

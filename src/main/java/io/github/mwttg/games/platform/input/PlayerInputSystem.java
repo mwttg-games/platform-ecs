@@ -2,12 +2,12 @@ package io.github.mwttg.games.platform.input;
 
 import org.lwjgl.glfw.GLFW;
 
-public final class PlayerInputSystem2 {
+public final class PlayerInputSystem {
 
   private static float JUMP_TIMER = 0.0f;
   private static boolean LAST_JUMP = false;
 
-  private PlayerInputSystem2() {
+  private PlayerInputSystem() {
   }
 
   public static PlayerInput getPlayerInput(final long windowId, final float deltaTime) {

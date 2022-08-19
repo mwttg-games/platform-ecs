@@ -57,8 +57,8 @@ public final class PlayerJumpUpRightState extends PlayerJumpUpState {
   @Override
   public void handleStateTransitions(final PlayerInput playerInput, final SolidGridComponent solidGridComponent) {
     toFallDownRight();
-    toJumpUpLeft(playerInput.xAxis());
-    doubleJump(playerInput.jump());
+    toJumpUpLeft(playerInput);
+    doubleJump(playerInput);
 
     final var isTopBlocked = SolidGridSystem.isTopBlocked(getTransform(), getPlayerData().getTileSize(), solidGridComponent);
     toFallDownRight(isTopBlocked);
@@ -70,14 +70,14 @@ public final class PlayerJumpUpRightState extends PlayerJumpUpState {
     }
   }
 
-  private void toJumpUpLeft(final int xAxis) {
-    if (xAxis == -1 && getInAirTime() < Configuration.PLAYER_MAX_RISE_TIME) {
+  private void toJumpUpLeft(final PlayerInput playerInput) {
+    if (playerInput.xAxis() == -1 && getInAirTime() < Configuration.PLAYER_MAX_RISE_TIME) {
       getPlayerStateComponent().switchToJumpUpLeftState(getInAirTime());
     }
   }
 
-  private void doubleJump(final KeyInput jump) {
-    if (jump.isPressed()
+  private void doubleJump(final PlayerInput playerInput) {
+    if (playerInput.jump().isPressed()
         && getPlayerData().getPlayerAbility().hasDoubleJump()
         // && getPlayerStateComponent().getPreviousState() instanceof PlayerInAirState
         && getPlayerData().getJumpCounter() < Configuration.PLAYER_MAX_JUMP_AMOUNT) {

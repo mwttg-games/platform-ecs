@@ -57,31 +57,31 @@ public final class PlayerFallDownRightState extends PlayerFallDownState {
 
   @Override
   public void handleStateTransitions(final PlayerInput playerInput, final SolidGridComponent solidGridComponent) {
-    toFallDownLeft(playerInput.xAxis());
-    coyoteTimeToJumpUpRight(playerInput.jump());
-    doubleJump(playerInput.jump());
+    toFallDownLeft(playerInput);
+    coyoteTimeToJumpUpRight(playerInput);
+    doubleJump(playerInput);
 
     final var onGround = SolidGridSystem.isGroundTouched(getTransform(), getPlayerData().getTileSize(), solidGridComponent);
     toIdleRight(playerInput.xAxis(), onGround);
     toWalkRight(playerInput.xAxis(), onGround);
   }
 
-  private void toFallDownLeft(final int xAxis) {
-    if (xAxis == -1) {
+  private void toFallDownLeft(final PlayerInput playerInput) {
+    if (playerInput.xAxis() == -1) {
       getPlayerStateComponent().switchToFallDownLeftState(getInAirTime());
     }
   }
 
-  private void coyoteTimeToJumpUpRight(final KeyInput jump) {
-    if (jump.isPressed()
+  private void coyoteTimeToJumpUpRight(final PlayerInput playerInput) {
+    if (playerInput.jump().isPressed()
         && getInAirTime() <= Configuration.COYOTE_TIME
         && getPlayerStateComponent().getPreviousState() instanceof PlayerOnGroundState) {
       getPlayerStateComponent().switchToJumpUpRightState();
     }
   }
 
-  private void doubleJump(final KeyInput jump) {
-    if (jump.isPressed()
+  private void doubleJump(final PlayerInput playerInput) {
+    if (playerInput.jump().isPressed()
         && getPlayerData().getPlayerAbility().hasDoubleJump()
         // && getPlayerStateComponent().getPreviousState() instanceof PlayerInAirState
         && getPlayerData().getJumpCounter() < Configuration.PLAYER_MAX_JUMP_AMOUNT) {

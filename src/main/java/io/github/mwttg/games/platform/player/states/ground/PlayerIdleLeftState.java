@@ -37,25 +37,25 @@ public final class PlayerIdleLeftState extends PlayerIdleState {
 
   @Override
   public void handleStateTransitions(final PlayerInput playerInput, final SolidGridComponent solidGridComponent) {
-    toWalkLeft(playerInput.xAxis());
-    toWalkRight(playerInput.xAxis());
-    toJumpUp(playerInput.jump());
+    toWalkLeft(playerInput);
+    toWalkRight(playerInput);
+    toJumpUp(playerInput);
   }
 
-  private void toWalkLeft(final int xAxis) {
-    if (xAxis == -1) {
+  private void toWalkLeft(final PlayerInput playerInput) {
+    if (playerInput.xAxis() == -1) {
       getPlayerStateComponent().switchToWalkLeftState();
     }
   }
 
-  private void toWalkRight(final int xAxis) {
-    if (xAxis == 1) {
+  private void toWalkRight(final PlayerInput playerInput) {
+    if (playerInput.xAxis() == 1) {
       getPlayerStateComponent().switchToWalkRightState();
     }
   }
 
-  private void toJumpUp(final KeyInput jump) {
-    if (jump.isPressed()) {
+  private void toJumpUp(final PlayerInput playerInput) {
+    if (playerInput.jump().isPressed()) {
       getPlayerStateComponent().switchToJumpUpLeftState();
     }
   }

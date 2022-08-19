@@ -1,8 +1,8 @@
 package io.github.mwttg.games.platform.player.states;
 
+import io.github.mwttg.games.platform.input.PlayerInput;
 import io.github.mwttg.games.platform.player.SolidGridComponent;
 import org.joml.Matrix4f;
-import org.joml.Vector2i;
 
 public interface PlayerState {
 
@@ -18,7 +18,7 @@ public interface PlayerState {
 
   void draw(final Matrix4f model, final Matrix4f view, final Matrix4f projection);
 
-  void update(final float deltaTime, final Vector2i inputVector, final SolidGridComponent solidGridComponent);
+  void update(final float deltaTime, final PlayerInput playerInput, final SolidGridComponent solidGridComponent);
 
-  void handleStateTransitions(final Vector2i inputVector, final SolidGridComponent solidGridComponent);
+  void handleStateTransitions(final PlayerInput playerInput, final SolidGridComponent solidGridComponent);
 }

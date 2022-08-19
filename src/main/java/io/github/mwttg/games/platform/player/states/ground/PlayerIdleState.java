@@ -1,13 +1,12 @@
 package io.github.mwttg.games.platform.player.states.ground;
 
 import io.github.mwttg.games.platform.draw.SpriteAnimationComponent;
-import io.github.mwttg.games.platform.player.FacingDirection;
+import io.github.mwttg.games.platform.input.PlayerInput;
 import io.github.mwttg.games.platform.player.PlayerData;
 import io.github.mwttg.games.platform.player.PlayerStateComponent;
 import io.github.mwttg.games.platform.player.SolidGridComponent;
 import java.util.Map;
 import org.joml.Matrix4f;
-import org.joml.Vector2i;
 
 public abstract class PlayerIdleState extends PlayerOnGroundState {
 
@@ -29,7 +28,7 @@ public abstract class PlayerIdleState extends PlayerOnGroundState {
   }
 
   @Override
-  public void update(final float deltaTime, final Vector2i inputVector, final SolidGridComponent solidGridComponent) {
+  public void update(final float deltaTime, final PlayerInput playerInput, final SolidGridComponent solidGridComponent) {
     // nothing to do
   }
 }

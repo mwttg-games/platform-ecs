@@ -5,7 +5,7 @@ public class PlayerAbility {
   private boolean doubleJump;
 
   public PlayerAbility() {
-    this.doubleJump = true;
+    this.doubleJump = false;
   }
 
   public void activateDoubleJump() {

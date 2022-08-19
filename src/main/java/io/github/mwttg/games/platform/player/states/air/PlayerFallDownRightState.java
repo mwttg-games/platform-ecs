@@ -2,6 +2,8 @@ package io.github.mwttg.games.platform.player.states.air;
 
 import io.github.mwttg.games.platform.Configuration;
 import io.github.mwttg.games.platform.draw.SpriteAnimationComponent;
+import io.github.mwttg.games.platform.input.KeyInput;
+import io.github.mwttg.games.platform.input.PlayerInput;
 import io.github.mwttg.games.platform.player.FacingDirection;
 import io.github.mwttg.games.platform.player.PlayerData;
 import io.github.mwttg.games.platform.player.PlayerStateComponent;
@@ -12,7 +14,6 @@ import io.github.mwttg.games.platform.player.physics.MoveRight;
 import io.github.mwttg.games.platform.player.states.ground.PlayerOnGroundState;
 import java.util.Map;
 import org.joml.Matrix4f;
-import org.joml.Vector2i;
 
 public final class PlayerFallDownRightState extends PlayerFallDownState {
 
@@ -46,8 +47,8 @@ public final class PlayerFallDownRightState extends PlayerFallDownState {
   }
 
   @Override
-  public void update(final float deltaTime, final Vector2i inputVector, final SolidGridComponent solidGridComponent) {
-    if (inputVector.x() == 1) {
+  public void update(final float deltaTime, final PlayerInput playerInput, final SolidGridComponent solidGridComponent) {
+    if (playerInput.xAxis() == 1) {
       MoveRight.execute(deltaTime, getPlayerData(), getTransform(), solidGridComponent);
     }
     FallDown.execute(getInAirTime(), deltaTime, getPlayerData(), getTransform(), solidGridComponent);
@@ -55,33 +56,32 @@ public final class PlayerFallDownRightState extends PlayerFallDownState {
   }
 
   @Override
-  public void handleStateTransitions(final Vector2i inputVector, final SolidGridComponent solidGridComponent) {
-    System.out.println("jumpCounter: " +getPlayerData().getJumpCounter());
-    toFallDownLeft(inputVector);
-    coyoteTimeToJumpUpRight(inputVector);
-    doubleJump(inputVector);
+  public void handleStateTransitions(final PlayerInput playerInput, final SolidGridComponent solidGridComponent) {
+    toFallDownLeft(playerInput.xAxis());
+    coyoteTimeToJumpUpRight(playerInput.jump());
+    doubleJump(playerInput.jump());
 
     final var onGround = SolidGridSystem.isGroundTouched(getTransform(), getPlayerData().getTileSize(), solidGridComponent);
-    toIdleRight(inputVector, onGround);
-    toWalkRight(inputVector, onGround);
+    toIdleRight(playerInput.xAxis(), onGround);
+    toWalkRight(playerInput.xAxis(), onGround);
   }
 
-  private void toFallDownLeft(final Vector2i inputVector) {
-    if (inputVector.x() == -1) {
+  private void toFallDownLeft(final int xAxis) {
+    if (xAxis == -1) {
       getPlayerStateComponent().switchToFallDownLeftState(getInAirTime());
     }
   }
 
-  private void coyoteTimeToJumpUpRight(final Vector2i inputVector) {
-    if (inputVector.y() == 1
+  private void coyoteTimeToJumpUpRight(final KeyInput jump) {
+    if (jump.isPressed()
         && getInAirTime() <= Configuration.COYOTE_TIME
         && getPlayerStateComponent().getPreviousState() instanceof PlayerOnGroundState) {
       getPlayerStateComponent().switchToJumpUpRightState();
     }
   }
 
-  private void doubleJump(final Vector2i inputVector) {
-    if (inputVector.y() == 1
+  private void doubleJump(final KeyInput jump) {
+    if (jump.isPressed()
         && getPlayerData().getPlayerAbility().hasDoubleJump()
         // && getPlayerStateComponent().getPreviousState() instanceof PlayerInAirState
         && getPlayerData().getJumpCounter() < Configuration.PLAYER_MAX_JUMP_AMOUNT) {
@@ -89,14 +89,14 @@ public final class PlayerFallDownRightState extends PlayerFallDownState {
     }
   }
 
-  private void toIdleRight(final Vector2i inputVector, final boolean onGround) {
-    if (onGround && inputVector.x() == 0 && getPlayerData().getFacingDirection() == FacingDirection.RIGHT) {
+  private void toIdleRight(final int xAxis, final boolean onGround) {
+    if (onGround && xAxis == 0 && getPlayerData().getFacingDirection() == FacingDirection.RIGHT) {
       getPlayerStateComponent().switchToIdleRightState();
     }
   }
 
-  private void toWalkRight(final Vector2i inputVector, final boolean onGround) {
-    if (onGround && inputVector.x() == 1) {
+  private void toWalkRight(final int xAxis, final boolean onGround) {
+    if (onGround && xAxis == 1) {
       getPlayerStateComponent().switchToWalkRightState();
     }
   }

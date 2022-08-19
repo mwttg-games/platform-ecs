@@ -19,6 +19,7 @@ public abstract class PlayerOnGroundState extends AbstractPlayerState {
   @Override
   public void enter() {
     super.enter();
+    getPlayerData().resetJumpCounter();
   }
 
   @Override

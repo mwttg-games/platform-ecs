@@ -18,6 +18,7 @@ public abstract class PlayerJumpUpState extends PlayerInAirState {
   @Override
   public void enter() {
     super.enter();
+    getPlayerData().incJumpCounter();
   }
 
   @Override

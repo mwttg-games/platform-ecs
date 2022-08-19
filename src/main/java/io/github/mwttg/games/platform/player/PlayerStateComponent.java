@@ -41,6 +41,7 @@ public class PlayerStateComponent {
     this.jumpUpRight = new PlayerJumpUpRightState(animationComponentByName, this, modelMatrix, playerData);
 
     this.currentState = idleRight;
+    this.previousState = currentState;  // to avoid npe
   }
 
   public PlayerState getPreviousState() {
@@ -105,6 +106,9 @@ public class PlayerStateComponent {
     previousState = currentState;
     currentState = newState;
 
+    System.out.println("state: " + currentState.getClass().getSimpleName() + "  previous: " + previousState.getClass().getSimpleName());
+
+
     currentState.enter();
   }
 
@@ -118,6 +122,8 @@ public class PlayerStateComponent {
     previousState = currentState;
     currentState = inAirState;
 
-    inAirState.enter(alreadyUsedAirTime);
+    System.out.println("state: " + currentState.getClass().getSimpleName() + "  previous: " + previousState.getClass().getSimpleName());
+
+    ((PlayerInAirState) currentState).enter(alreadyUsedAirTime);
   }
 }

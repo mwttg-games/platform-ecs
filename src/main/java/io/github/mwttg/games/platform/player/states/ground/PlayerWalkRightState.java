@@ -43,21 +43,35 @@ public final class PlayerWalkRightState extends PlayerWalkState {
 
   @Override
   public void handleStateTransitions(final Vector2i inputVector, final SolidGridComponent solidGridComponent) {
+    toIdleRight(inputVector);
+    toWalkLeft(inputVector);
+    toJumpUpRight(inputVector);
+
+    final var onGround = SolidGridSystem.isGroundTouched(getTransform(), getPlayerData().getTileSize(), solidGridComponent);
+    toFallDownRight(onGround);
+  }
+
+  private void toIdleRight(final Vector2i inputVector) {
     if (inputVector.x() == 0) {
       getPlayerStateComponent().switchToIdleRightState();
     }
+  }
 
-    if (inputVector.x() == -1) {
-      getPlayerStateComponent().switchToWalkLeftState();
-    }
-
+  private void toJumpUpRight(final Vector2i inputVector) {
     if (inputVector.y() == 1) {
       getPlayerStateComponent().switchToJumpUpRightState();
     }
+  }
 
-    final var onGround = SolidGridSystem.isGroundTouched(getTransform(), getPlayerData().getTileSize(), solidGridComponent);
+  private void toFallDownRight(final boolean onGround) {
     if (!onGround) {
       getPlayerStateComponent().switchToFallDownRightState();
+    }
+  }
+
+  private void toWalkLeft(final Vector2i inputVector) {
+    if (inputVector.x() == -1) {
+      getPlayerStateComponent().switchToWalkLeftState();
     }
   }
 }

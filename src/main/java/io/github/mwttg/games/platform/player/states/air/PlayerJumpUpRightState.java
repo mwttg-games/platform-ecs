@@ -34,6 +34,12 @@ public final class PlayerJumpUpRightState extends PlayerJumpUpState {
   }
 
   @Override
+  public void enter(final float alreadyUsedAirTime) {
+    super.enter(alreadyUsedAirTime);
+    getPlayerData().setFacingDirection(FacingDirection.RIGHT);
+  }
+
+  @Override
   public void exit() {
     super.exit();
   }
@@ -49,23 +55,37 @@ public final class PlayerJumpUpRightState extends PlayerJumpUpState {
 
   @Override
   public void handleStateTransitions(final Vector2i inputVector, final SolidGridComponent solidGridComponent) {
-    if (inputVector.x() == 1 && getInAirTime() >= Configuration.PLAYER_MAX_RISE_TIME) {
+    System.out.println("jumpCounter: " +getPlayerData().getJumpCounter());
+    toFallDownRight();
+    toJumpUpLeft(inputVector);
+    doubleJump(inputVector);
+
+    final var isTopBlocked = SolidGridSystem.isTopBlocked(getTransform(), getPlayerData().getTileSize(), solidGridComponent);
+    toFallDownRight(isTopBlocked);
+  }
+
+  private void toFallDownRight() {
+    if (getInAirTime() >= Configuration.PLAYER_MAX_RISE_TIME) {
       getPlayerStateComponent().switchToFallDownRightState();
     }
+  }
 
-    if (inputVector.x() == -1 && getInAirTime() >= Configuration.PLAYER_MAX_RISE_TIME) {
-      getPlayerStateComponent().switchToFallDownLeftState();
-    }
-
-    if (inputVector.x() == 0 && getInAirTime() >= Configuration.PLAYER_MAX_RISE_TIME) {
-      getPlayerStateComponent().switchToFallDownRightState();
-    }
-
+  private void toJumpUpLeft(final Vector2i inputVector) {
     if (inputVector.x() == -1 && getInAirTime() < Configuration.PLAYER_MAX_RISE_TIME) {
       getPlayerStateComponent().switchToJumpUpLeftState(getInAirTime());
     }
+  }
 
-    final var isTopBlocked = SolidGridSystem.isTopBlocked(getTransform(), getPlayerData().getTileSize(), solidGridComponent);
+  private void doubleJump(final Vector2i inputVector) {
+    if (inputVector.y() == 1
+        && getPlayerData().getPlayerAbility().hasDoubleJump()
+        // && getPlayerStateComponent().getPreviousState() instanceof PlayerInAirState
+        && getPlayerData().getJumpCounter() < Configuration.PLAYER_MAX_JUMP_AMOUNT) {
+      getPlayerStateComponent().switchToJumpUpRightState();
+    }
+  }
+
+  private void toFallDownRight(final boolean isTopBlocked) {
     if (isTopBlocked) {
       getPlayerStateComponent().switchToFallDownRightState();
     }

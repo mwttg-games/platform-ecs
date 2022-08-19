@@ -4,20 +4,22 @@ public class PlayerData {
 
   private FacingDirection facingDirection;
   private final TileSize tileSize;
-  private int currentJumpCounter;
+  private final PlayerAbility playerAbility;
+  private int jumpCounter;
   // more to add like activated power ups, stats (in subclasses etc.)
 
   public PlayerData() {
     this.facingDirection = FacingDirection.RIGHT;
     this.tileSize = new TileSize(1.0f, 1.0f);
-    this.currentJumpCounter = 0;
+    this.jumpCounter = 0;
+    this.playerAbility = new PlayerAbility();
   }
 
   public FacingDirection getFacingDirection() {
     return facingDirection;
   }
 
-  public void setFacingDirection(FacingDirection facingDirection) {
+  public void setFacingDirection(final FacingDirection facingDirection) {
     this.facingDirection = facingDirection;
   }
 
@@ -25,11 +27,19 @@ public class PlayerData {
     return tileSize;
   }
 
-  public int getCurrentJumpCounter() {
-    return currentJumpCounter;
+  public void incJumpCounter() {
+    jumpCounter = jumpCounter + 1;
   }
 
-  public void resetCurrentJumpCounter() {
-    currentJumpCounter = 0;
+  public void resetJumpCounter() {
+    jumpCounter = 0;
+  }
+
+  public int getJumpCounter(){
+    return jumpCounter;
+  }
+
+  public PlayerAbility getPlayerAbility() {
+    return playerAbility;
   }
 }

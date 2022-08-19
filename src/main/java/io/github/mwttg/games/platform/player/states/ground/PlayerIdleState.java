@@ -32,23 +32,4 @@ public abstract class PlayerIdleState extends PlayerOnGroundState {
   public void update(final float deltaTime, final Vector2i inputVector, final SolidGridComponent solidGridComponent) {
     // nothing to do
   }
-
-  @Override
-  public void handleStateTransitions(final Vector2i inputVector, final SolidGridComponent solidGridComponent) {
-    if (inputVector.x() == -1) {
-      getPlayerStateComponent().switchToWalkLeftState();
-    }
-
-    if (inputVector.x() == 1) {
-      getPlayerStateComponent().switchToWalkRightState();
-    }
-
-    if (inputVector.y() == 1 && getPlayerData().getFacingDirection() == FacingDirection.RIGHT) {
-      getPlayerStateComponent().switchToJumpUpRightState();
-    }
-
-    if (inputVector.y() == 1 && getPlayerData().getFacingDirection() == FacingDirection.LEFT) {
-      getPlayerStateComponent().switchToJumpUpLeftState();
-    }
-  }
 }

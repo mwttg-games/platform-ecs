@@ -25,7 +25,7 @@ public final class PlayerFallDownLeftState extends PlayerFallDownState {
 
   @Override
   protected String getAnimationName() {
-    return IDLE_LEFT;
+    return FALL_LEFT;
   }
 
   @Override

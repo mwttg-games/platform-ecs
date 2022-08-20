@@ -24,7 +24,7 @@ public final class PlayerJumpUpRightState extends PlayerJumpUpState {
 
   @Override
   protected String getAnimationName() {
-    return WALK_RIGHT;
+    return JUMP_RIGHT;
   }
 
   @Override

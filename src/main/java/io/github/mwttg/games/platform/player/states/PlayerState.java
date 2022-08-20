@@ -11,6 +11,10 @@ public interface PlayerState {
   String WALK_RIGHT = "WALK_RIGHT";
   String IDLE_LEFT = "IDLE_LEFT";
   String IDLE_RIGHT = "IDLE_RIGHT";
+  String JUMP_RIGHT = "JUMP_RIGHT";
+  String JUMP_LEFT = "JUMP_LEFT";
+  String FALL_RIGHT = "FALL_RIGHT";
+  String FALL_LEFT = "FALL_LEFT";
 
   void enter();
 

@@ -82,7 +82,6 @@ public final class PlayerJumpUpRightState extends PlayerJumpUpState {
   }
 
   private void doubleJumpToJumpUpRight(final PlayerInput playerInput) {
-    System.out.println(getPlayerData().getJumpCounter());
     if (playerInput.jump()
         && getPlayerData().getPlayerAbility().hasDoubleJump()
         && getPlayerData().getJumpCounter() < Configuration.PLAYER_MAX_JUMP_AMOUNT) {

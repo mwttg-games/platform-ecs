@@ -2,7 +2,6 @@ package io.github.mwttg.games.platform.player.states.air;
 
 import io.github.mwttg.games.platform.Configuration;
 import io.github.mwttg.games.platform.draw.SpriteAnimationComponent;
-import io.github.mwttg.games.platform.input.KeyInput;
 import io.github.mwttg.games.platform.input.PlayerInput;
 import io.github.mwttg.games.platform.player.FacingDirection;
 import io.github.mwttg.games.platform.player.PlayerData;
@@ -73,7 +72,7 @@ public final class PlayerFallDownRightState extends PlayerFallDownState {
   }
 
   private void coyoteTimeToJumpUpRight(final PlayerInput playerInput) {
-    if (playerInput.jump().isPressed()
+    if (playerInput.jump()
         && getInAirTime() <= Configuration.COYOTE_TIME
         && getPlayerStateComponent().getPreviousState() instanceof PlayerOnGroundState) {
       getPlayerStateComponent().switchToJumpUpRightState();
@@ -81,7 +80,7 @@ public final class PlayerFallDownRightState extends PlayerFallDownState {
   }
 
   private void doubleJump(final PlayerInput playerInput) {
-    if (playerInput.jump().isPressed()
+    if (playerInput.jump()
         && getPlayerData().getPlayerAbility().hasDoubleJump()
         // && getPlayerStateComponent().getPreviousState() instanceof PlayerInAirState
         && getPlayerData().getJumpCounter() < Configuration.PLAYER_MAX_JUMP_AMOUNT) {

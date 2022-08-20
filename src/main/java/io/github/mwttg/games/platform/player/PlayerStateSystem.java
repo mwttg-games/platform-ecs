@@ -11,7 +11,7 @@ public final class PlayerStateSystem {
                             final PlayerStateComponent playerStateComponent,
                             final float deltaTime,
                             final SolidGridComponent solidGridComponent) {
-    final var playerInput = PlayerInputSystem.getPlayerInput(windowId, deltaTime);
+    final var playerInput = PlayerInputSystem.getPlayerInput(windowId);
     final var currentState = playerStateComponent.getCurrentState();
     currentState.handleStateTransitions(playerInput, solidGridComponent);
     currentState.update(deltaTime, playerInput, solidGridComponent);

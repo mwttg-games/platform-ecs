@@ -106,9 +106,6 @@ public class PlayerStateComponent {
     previousState = currentState;
     currentState = newState;
 
-    System.out.println("state: " + currentState.getClass().getSimpleName() + "  previous: " + previousState.getClass().getSimpleName());
-
-
     currentState.enter();
   }
 
@@ -121,8 +118,6 @@ public class PlayerStateComponent {
 
     previousState = currentState;
     currentState = inAirState;
-
-    System.out.println("state: " + currentState.getClass().getSimpleName() + "  previous: " + previousState.getClass().getSimpleName());
 
     ((PlayerInAirState) currentState).enter(alreadyUsedAirTime);
   }

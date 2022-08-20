@@ -35,7 +35,7 @@ public class PlayerData {
     jumpCounter = 0;
   }
 
-  public int getJumpCounter(){
+  public int getJumpCounter() {
     return jumpCounter;
   }
 

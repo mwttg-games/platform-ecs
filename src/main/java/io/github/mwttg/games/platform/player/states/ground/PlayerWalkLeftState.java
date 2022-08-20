@@ -1,7 +1,6 @@
 package io.github.mwttg.games.platform.player.states.ground;
 
 import io.github.mwttg.games.platform.draw.SpriteAnimationComponent;
-import io.github.mwttg.games.platform.input.KeyInput;
 import io.github.mwttg.games.platform.input.PlayerInput;
 import io.github.mwttg.games.platform.player.FacingDirection;
 import io.github.mwttg.games.platform.player.PlayerData;
@@ -59,7 +58,7 @@ public final class PlayerWalkLeftState extends PlayerWalkState {
   }
 
   private void toJumpUpLeft(final PlayerInput playerInput) {
-    if (playerInput.jump().isPressed()) {
+    if (playerInput.jump()) {
       getPlayerStateComponent().switchToJumpUpLeftState();
     }
   }

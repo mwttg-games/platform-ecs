@@ -8,6 +8,7 @@ import io.github.mwttg.games.platform.player.PlayerData;
 import io.github.mwttg.games.platform.player.PlayerStateComponent;
 import io.github.mwttg.games.platform.player.SolidGridComponent;
 import io.github.mwttg.games.platform.player.SolidGridSystem;
+import io.github.mwttg.games.platform.player.effect.PlayerEffectComponent;
 import io.github.mwttg.games.platform.player.physics.FallDown;
 import io.github.mwttg.games.platform.player.physics.MoveLeft;
 import io.github.mwttg.games.platform.player.states.ground.PlayerOnGroundState;
@@ -18,9 +19,10 @@ public final class PlayerFallDownLeftState extends PlayerFallDownState {
 
   public PlayerFallDownLeftState(final Map<String, SpriteAnimationComponent> animationComponentByName,
                                  final PlayerStateComponent playerStateComponent,
+                                 final PlayerEffectComponent playerEffectComponent,
                                  final Matrix4f transform,
                                  final PlayerData playerData) {
-    super(animationComponentByName, playerStateComponent, transform, playerData);
+    super(animationComponentByName, playerStateComponent, playerEffectComponent, transform, playerData);
   }
 
   @Override

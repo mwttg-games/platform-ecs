@@ -6,6 +6,7 @@ import io.github.mwttg.games.platform.player.FacingDirection;
 import io.github.mwttg.games.platform.player.PlayerData;
 import io.github.mwttg.games.platform.player.PlayerStateComponent;
 import io.github.mwttg.games.platform.player.SolidGridComponent;
+import io.github.mwttg.games.platform.player.effect.PlayerEffectComponent;
 import java.util.Map;
 import org.joml.Matrix4f;
 
@@ -13,9 +14,10 @@ public final class PlayerIdleRightState extends PlayerIdleState {
 
   public PlayerIdleRightState(final Map<String, SpriteAnimationComponent> animationComponentByName,
                               final PlayerStateComponent playerStateComponent,
+                              final PlayerEffectComponent playerEffectComponent,
                               final Matrix4f transform,
                               final PlayerData playerData) {
-    super(animationComponentByName, playerStateComponent, transform, playerData);
+    super(animationComponentByName, playerStateComponent, playerEffectComponent, transform, playerData);
   }
 
   @Override

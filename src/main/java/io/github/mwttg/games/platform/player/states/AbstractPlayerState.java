@@ -4,6 +4,7 @@ import io.github.mwttg.games.platform.draw.SpriteAnimationComponent;
 import io.github.mwttg.games.platform.draw.SpriteAnimationSystem;
 import io.github.mwttg.games.platform.player.PlayerData;
 import io.github.mwttg.games.platform.player.PlayerStateComponent;
+import io.github.mwttg.games.platform.player.effect.PlayerEffectComponent;
 import java.util.Map;
 import org.joml.Matrix4f;
 
@@ -11,15 +12,18 @@ public abstract class AbstractPlayerState implements PlayerState {
 
   private final Map<String, SpriteAnimationComponent> animationComponentByName;
   private final PlayerStateComponent playerStateComponent;
+  private final PlayerEffectComponent playerEffectComponent;
   private final Matrix4f transform;
   private final PlayerData playerData;
 
   public AbstractPlayerState(final Map<String, SpriteAnimationComponent> animationComponentByName,
                              final PlayerStateComponent playerStateComponent,
+                             final PlayerEffectComponent playerEffectComponent,
                              final Matrix4f transform,
                              final PlayerData playerData) {
     this.animationComponentByName = animationComponentByName;
     this.playerStateComponent = playerStateComponent;
+    this.playerEffectComponent = playerEffectComponent;
     this.transform = transform;
     this.playerData = playerData;
   }
@@ -42,6 +46,10 @@ public abstract class AbstractPlayerState implements PlayerState {
 
   protected PlayerStateComponent getPlayerStateComponent() {
     return playerStateComponent;
+  }
+
+  protected PlayerEffectComponent getPlayerEffectComponent() {
+    return playerEffectComponent;
   }
 
   protected Matrix4f getTransform() {

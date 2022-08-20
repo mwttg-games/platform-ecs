@@ -58,7 +58,7 @@ public final class PlayerFallDownRightState extends PlayerFallDownState {
   public void handleStateTransitions(final PlayerInput playerInput, final SolidGridComponent solidGridComponent) {
     toFallDownLeft(playerInput);
     coyoteTimeToJumpUpRight(playerInput);
-    doubleJump(playerInput);
+    doubleJumpToJumpUpRight(playerInput);
 
     final var onGround = SolidGridSystem.isGroundTouched(getTransform(), getPlayerData().getTileSize(), solidGridComponent);
     toIdleRight(playerInput.xAxis(), onGround);
@@ -79,10 +79,9 @@ public final class PlayerFallDownRightState extends PlayerFallDownState {
     }
   }
 
-  private void doubleJump(final PlayerInput playerInput) {
+  private void doubleJumpToJumpUpRight(final PlayerInput playerInput) {
     if (playerInput.jump()
         && getPlayerData().getPlayerAbility().hasDoubleJump()
-        // && getPlayerStateComponent().getPreviousState() instanceof PlayerInAirState
         && getPlayerData().getJumpCounter() < Configuration.PLAYER_MAX_JUMP_AMOUNT) {
       getPlayerStateComponent().switchToJumpUpRightState();
     }

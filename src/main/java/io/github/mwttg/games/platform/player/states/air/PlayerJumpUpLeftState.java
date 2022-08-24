@@ -6,8 +6,8 @@ import io.github.mwttg.games.platform.input.PlayerInput;
 import io.github.mwttg.games.platform.player.FacingDirection;
 import io.github.mwttg.games.platform.player.PlayerData;
 import io.github.mwttg.games.platform.player.PlayerStateComponent;
-import io.github.mwttg.games.platform.player.SolidGridComponent;
-import io.github.mwttg.games.platform.player.SolidGridSystem;
+import io.github.mwttg.games.platform.player.colision.GridComponent;
+import io.github.mwttg.games.platform.player.colision.GridSystem;
 import io.github.mwttg.games.platform.player.effect.PlayerEffectComponent;
 import io.github.mwttg.games.platform.player.physics.JumpUp;
 import io.github.mwttg.games.platform.player.physics.MoveLeft;
@@ -47,21 +47,21 @@ public final class PlayerJumpUpLeftState extends PlayerJumpUpState {
   }
 
   @Override
-  public void update(final float deltaTime, final PlayerInput playerInput, final SolidGridComponent solidGridComponent) {
+  public void update(final float deltaTime, final PlayerInput playerInput, final GridComponent gridComponent) {
     if (playerInput.xAxis() == -1) {
-      MoveLeft.execute(deltaTime, getPlayerData(), getTransform(), solidGridComponent);
+      MoveLeft.execute(deltaTime, getPlayerData(), getTransform(), gridComponent);
     }
-    JumpUp.execute(getInAirTime(), deltaTime, getPlayerData(), getTransform(), solidGridComponent);
+    JumpUp.execute(getInAirTime(), deltaTime, getPlayerData(), getTransform(), gridComponent);
     updateInAirTime(deltaTime);
   }
 
   @Override
-  public void handleStateTransitions(final PlayerInput playerInput, final SolidGridComponent solidGridComponent) {
+  public void handleStateTransitions(final PlayerInput playerInput, final GridComponent gridComponent) {
     toFallDownLeft();
     toJumpUpRight(playerInput);
     doubleJumpToJumpUpLeft(playerInput);
 
-    final var isTopBlocked = SolidGridSystem.isTopBlocked(getTransform(), getPlayerData().getTileSize(), solidGridComponent);
+    final var isTopBlocked = GridSystem.isTopBlocked(getTransform(), getPlayerData().getTileSize(), gridComponent);
     toFallDownLeft(isTopBlocked);
   }
 

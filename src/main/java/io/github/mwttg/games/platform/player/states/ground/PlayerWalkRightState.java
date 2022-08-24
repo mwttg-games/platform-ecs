@@ -5,8 +5,8 @@ import io.github.mwttg.games.platform.input.PlayerInput;
 import io.github.mwttg.games.platform.player.FacingDirection;
 import io.github.mwttg.games.platform.player.PlayerData;
 import io.github.mwttg.games.platform.player.PlayerStateComponent;
-import io.github.mwttg.games.platform.player.SolidGridComponent;
-import io.github.mwttg.games.platform.player.SolidGridSystem;
+import io.github.mwttg.games.platform.player.colision.GridComponent;
+import io.github.mwttg.games.platform.player.colision.GridSystem;
 import io.github.mwttg.games.platform.player.effect.PlayerEffectComponent;
 import io.github.mwttg.games.platform.player.physics.MoveRight;
 import java.util.Map;
@@ -39,17 +39,17 @@ public final class PlayerWalkRightState extends PlayerWalkState {
   }
 
   @Override
-  public void update(final float deltaTime, final PlayerInput playerInput, final SolidGridComponent solidGridComponent) {
-    MoveRight.execute(deltaTime, getPlayerData(), getTransform(), solidGridComponent);
+  public void update(final float deltaTime, final PlayerInput playerInput, final GridComponent gridComponent) {
+    MoveRight.execute(deltaTime, getPlayerData(), getTransform(), gridComponent);
   }
 
   @Override
-  public void handleStateTransitions(final PlayerInput playerInput, final SolidGridComponent solidGridComponent) {
+  public void handleStateTransitions(final PlayerInput playerInput, final GridComponent gridComponent) {
     toIdleRight(playerInput);
     toWalkLeft(playerInput);
     toJumpUpRight(playerInput);
 
-    final var onGround = SolidGridSystem.isGroundTouched(getTransform(), getPlayerData().getTileSize(), solidGridComponent);
+    final var onGround = GridSystem.isGroundTouched(getTransform(), getPlayerData().getTileSize(), gridComponent);
     toFallDownRight(onGround);
   }
 

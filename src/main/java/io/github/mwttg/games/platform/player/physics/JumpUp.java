@@ -4,8 +4,8 @@ import static io.github.mwttg.games.platform.Configuration.JUMP_UP_GRAVITY;
 import static io.github.mwttg.games.platform.Configuration.PLAYER_JUMP_VELOCITY;
 
 import io.github.mwttg.games.platform.player.PlayerData;
-import io.github.mwttg.games.platform.player.SolidGridComponent;
-import io.github.mwttg.games.platform.player.SolidGridSystem;
+import io.github.mwttg.games.platform.player.colision.GridComponent;
+import io.github.mwttg.games.platform.player.colision.GridSystem;
 import io.github.mwttg.games.platform.player.TransformUtilities;
 import org.joml.Matrix4f;
 
@@ -18,9 +18,9 @@ public final class JumpUp {
                              final float deltaTime,
                              final PlayerData playerData,
                              final Matrix4f transform,
-                             final SolidGridComponent solidGridComponent) {
+                             final GridComponent gridComponent) {
     jumpUp(inAirTime, deltaTime, transform);
-    handleCollision(playerData, solidGridComponent, transform);
+    handleCollision(playerData, gridComponent, transform);
   }
 
   private static void jumpUp(final float inAirTime, final float deltaTime, final Matrix4f transform) {
@@ -33,9 +33,9 @@ public final class JumpUp {
   }
 
   public static void handleCollision(final PlayerData playerData,
-                                     final SolidGridComponent solidGridComponent,
+                                     final GridComponent gridComponent,
                                      final Matrix4f transform) {
-    final var blocked = SolidGridSystem.isTopBlocked(transform, playerData.getTileSize(), solidGridComponent);
+    final var blocked = GridSystem.isTopBlocked(transform, playerData.getTileSize(), gridComponent);
     if (blocked) {
       final var position = TransformUtilities.getPosition(transform);
       final var correctionY = -(position.y() - (int) position.y());

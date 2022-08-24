@@ -1,6 +1,7 @@
 package io.github.mwttg.games.platform.player;
 
 import io.github.mwttg.games.platform.input.PlayerInputSystem;
+import io.github.mwttg.games.platform.player.colision.GridComponent;
 
 public final class PlayerStateSystem {
 
@@ -10,9 +11,9 @@ public final class PlayerStateSystem {
   public static void update(final long windowId,
                             final PlayerStateComponent playerStateComponent,
                             final float deltaTime,
-                            final SolidGridComponent solidGridComponent) {
+                            final GridComponent gridComponent) {
     final var playerInput = PlayerInputSystem.getPlayerInput(windowId);
-    playerStateComponent.getCurrentState().handleStateTransitions(playerInput, solidGridComponent);
-    playerStateComponent.getCurrentState().update(deltaTime, playerInput, solidGridComponent);
+    playerStateComponent.getCurrentState().handleStateTransitions(playerInput, gridComponent);
+    playerStateComponent.getCurrentState().update(deltaTime, playerInput, gridComponent);
   }
 }

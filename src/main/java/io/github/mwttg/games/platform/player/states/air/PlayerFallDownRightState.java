@@ -6,8 +6,8 @@ import io.github.mwttg.games.platform.input.PlayerInput;
 import io.github.mwttg.games.platform.player.FacingDirection;
 import io.github.mwttg.games.platform.player.PlayerData;
 import io.github.mwttg.games.platform.player.PlayerStateComponent;
-import io.github.mwttg.games.platform.player.SolidGridComponent;
-import io.github.mwttg.games.platform.player.SolidGridSystem;
+import io.github.mwttg.games.platform.player.colision.GridComponent;
+import io.github.mwttg.games.platform.player.colision.GridSystem;
 import io.github.mwttg.games.platform.player.effect.PlayerEffectComponent;
 import io.github.mwttg.games.platform.player.physics.FallDown;
 import io.github.mwttg.games.platform.player.physics.MoveRight;
@@ -48,21 +48,21 @@ public final class PlayerFallDownRightState extends PlayerFallDownState {
   }
 
   @Override
-  public void update(final float deltaTime, final PlayerInput playerInput, final SolidGridComponent solidGridComponent) {
+  public void update(final float deltaTime, final PlayerInput playerInput, final GridComponent gridComponent) {
     if (playerInput.xAxis() == 1) {
-      MoveRight.execute(deltaTime, getPlayerData(), getTransform(), solidGridComponent);
+      MoveRight.execute(deltaTime, getPlayerData(), getTransform(), gridComponent);
     }
-    FallDown.execute(getInAirTime(), deltaTime, getPlayerData(), getTransform(), solidGridComponent);
+    FallDown.execute(getInAirTime(), deltaTime, getPlayerData(), getTransform(), gridComponent);
     updateInAirTime(deltaTime);
   }
 
   @Override
-  public void handleStateTransitions(final PlayerInput playerInput, final SolidGridComponent solidGridComponent) {
+  public void handleStateTransitions(final PlayerInput playerInput, final GridComponent gridComponent) {
     toFallDownLeft(playerInput);
     coyoteTimeToJumpUpRight(playerInput);
     doubleJumpToJumpUpRight(playerInput);
 
-    final var onGround = SolidGridSystem.isGroundTouched(getTransform(), getPlayerData().getTileSize(), solidGridComponent);
+    final var onGround = GridSystem.isGroundTouched(getTransform(), getPlayerData().getTileSize(), gridComponent);
     toIdleRight(playerInput.xAxis(), onGround);
     toWalkRight(playerInput.xAxis(), onGround);
   }

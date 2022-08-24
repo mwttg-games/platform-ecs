@@ -5,7 +5,7 @@ import io.github.mwttg.games.platform.input.PlayerInput;
 import io.github.mwttg.games.platform.player.FacingDirection;
 import io.github.mwttg.games.platform.player.PlayerData;
 import io.github.mwttg.games.platform.player.PlayerStateComponent;
-import io.github.mwttg.games.platform.player.SolidGridComponent;
+import io.github.mwttg.games.platform.player.colision.GridComponent;
 import io.github.mwttg.games.platform.player.effect.PlayerEffectComponent;
 import java.util.Map;
 import org.joml.Matrix4f;
@@ -37,7 +37,7 @@ public final class PlayerIdleLeftState extends PlayerIdleState {
   }
 
   @Override
-  public void handleStateTransitions(final PlayerInput playerInput, final SolidGridComponent solidGridComponent) {
+  public void handleStateTransitions(final PlayerInput playerInput, final GridComponent gridComponent) {
     toWalkLeft(playerInput);
     toWalkRight(playerInput);
     toJumpUp(playerInput);

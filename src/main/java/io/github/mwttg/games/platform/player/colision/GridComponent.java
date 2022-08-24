@@ -1,4 +1,4 @@
-package io.github.mwttg.games.platform.player;
+package io.github.mwttg.games.platform.player.colision;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import io.github.mwttg.games.basic.utilities.files.JsonFile;
@@ -7,7 +7,7 @@ import java.util.Objects;
 import java.util.StringJoiner;
 import org.joml.Vector2f;
 
-public class SolidGridComponent {
+public class GridComponent {
 
   private static final int WALKABLE = 0;
 
@@ -15,7 +15,7 @@ public class SolidGridComponent {
   private final int width;
   private final int height;
 
-  public SolidGridComponent(final String filename) {
+  public GridComponent(final String filename) {
     final var type = new TypeReference<List<List<Integer>>>() {
     };
     this.grid = JsonFile.readFrom(filename, type);
@@ -23,7 +23,7 @@ public class SolidGridComponent {
     this.width = grid.get(0).size();
   }
 
-  public SolidGridComponent(final List<List<Integer>> grid) {
+  public GridComponent(final List<List<Integer>> grid) {
     this.grid = grid;
     this.height = grid.size();
     this.width = grid.get(0).size();
@@ -44,7 +44,7 @@ public class SolidGridComponent {
     if (this == o) {
       return true;
     }
-    if (!(o instanceof SolidGridComponent that)) {
+    if (!(o instanceof GridComponent that)) {
       return false;
     }
     return width == that.width && height == that.height && grid.equals(that.grid);
@@ -57,7 +57,7 @@ public class SolidGridComponent {
 
   @Override
   public String toString() {
-    return new StringJoiner(", ", SolidGridComponent.class.getSimpleName() + "[", "]")
+    return new StringJoiner(", ", GridComponent.class.getSimpleName() + "[", "]")
         .add("grid=" + grid)
         .add("width=" + width)
         .add("height=" + height)

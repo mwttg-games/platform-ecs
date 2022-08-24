@@ -4,7 +4,7 @@ import io.github.mwttg.games.platform.draw.SpriteAnimationComponent;
 import io.github.mwttg.games.platform.player.PlayerData;
 import io.github.mwttg.games.platform.player.PlayerStateComponent;
 import io.github.mwttg.games.platform.player.PlayerStateSystem;
-import io.github.mwttg.games.platform.player.SolidGridComponent;
+import io.github.mwttg.games.platform.player.colision.GridComponent;
 import io.github.mwttg.games.platform.player.effect.PlayerEffectComponent;
 import io.github.mwttg.games.platform.player.effect.PlayerEffectSystem;
 import java.util.Map;
@@ -35,8 +35,8 @@ public record PlayerEntity(long windowId,
     PlayerEffectSystem.draw(playerEffectComponent, viewMatrix, projectionMatrix);
   }
 
-  public void update(final float deltaTime, final SolidGridComponent solidGridComponent) {
-    PlayerStateSystem.update(windowId, playerStateComponent, deltaTime, solidGridComponent);
+  public void update(final float deltaTime, final GridComponent gridComponent) {
+    PlayerStateSystem.update(windowId, playerStateComponent, deltaTime, gridComponent);
     PlayerEffectSystem.update(playerEffectComponent);
   }
 }

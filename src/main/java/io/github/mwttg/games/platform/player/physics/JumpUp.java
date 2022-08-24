@@ -4,9 +4,9 @@ import static io.github.mwttg.games.platform.Configuration.JUMP_UP_GRAVITY;
 import static io.github.mwttg.games.platform.Configuration.PLAYER_JUMP_VELOCITY;
 
 import io.github.mwttg.games.platform.player.PlayerData;
+import io.github.mwttg.games.platform.player.TransformUtilities;
 import io.github.mwttg.games.platform.player.colision.GridComponent;
 import io.github.mwttg.games.platform.player.colision.GridSystem;
-import io.github.mwttg.games.platform.player.TransformUtilities;
 import org.joml.Matrix4f;
 
 public final class JumpUp {

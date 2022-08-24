@@ -39,10 +39,10 @@ public class GridSystem {
     final var currentPosition = TransformUtilities.getPosition(transform);
     final var sensor1Position = new Vector2f(currentPosition.x(), currentPosition.y() + tileSize.height() - MARGIN);
     final var sensor2Position = new Vector2f(currentPosition.x(), currentPosition.y() + MARGIN);
-    final var sensor1Blocked = gridComponent.isBlocked(sensor1Position);
-    final var sensor2Blocked = gridComponent.isBlocked(sensor2Position);
+    final var tileType1 = gridComponent.getTileType(sensor1Position);
+    final var tileType2 = gridComponent.getTileType(sensor2Position);
 
-    return sensor1Blocked || sensor2Blocked;
+    return (tileType1 == TileType.SOLID) || (tileType2 == TileType.SOLID);
   }
 
   public static boolean isRightBlocked(final Matrix4f transform,
@@ -52,10 +52,10 @@ public class GridSystem {
     final var sensor1Position =
         new Vector2f(currentPosition.x() + tileSize.width(), currentPosition.y() + tileSize.height() - MARGIN);
     final var sensor2Position = new Vector2f(currentPosition.x() + tileSize.width(), currentPosition.y() + MARGIN);
-    final var sensor1Blocked = gridComponent.isBlocked(sensor1Position);
-    final var sensor2Blocked = gridComponent.isBlocked(sensor2Position);
+    final var tileType1 = gridComponent.getTileType(sensor1Position);
+    final var tileType2 = gridComponent.getTileType(sensor2Position);
 
-    return sensor1Blocked || sensor2Blocked;
+    return (tileType1 == TileType.SOLID) || (tileType2 == TileType.SOLID);
   }
 
   public static boolean isBottomBlocked(final Matrix4f transform,
@@ -64,10 +64,11 @@ public class GridSystem {
     final var currentPosition = TransformUtilities.getPosition(transform);
     final var sensor1Position = new Vector2f(currentPosition.x() + MARGIN, currentPosition.y());
     final var sensor2Position = new Vector2f(currentPosition.x() + tileSize.width() - MARGIN, currentPosition.y());
-    final var sensor1Blocked = gridComponent.isBlocked(sensor1Position);
-    final var sensor2Blocked = gridComponent.isBlocked(sensor2Position);
+    final var tileType1 = gridComponent.getTileType(sensor1Position);
+    final var tileType2 = gridComponent.getTileType(sensor2Position);
 
-    return sensor1Blocked || sensor2Blocked;
+    return (tileType1 == TileType.SOLID) || (tileType1 == TileType.LADDER_TOP)
+        || (tileType2 == TileType.SOLID) || (tileType2 == TileType.LADDER_TOP);
   }
 
   public static boolean isGroundTouched(final Matrix4f transform,
@@ -76,10 +77,11 @@ public class GridSystem {
     final var currentPosition = TransformUtilities.getPosition(transform);
     final var sensor1Position = new Vector2f(currentPosition.x() + MARGIN, currentPosition.y() - DELTA);
     final var sensor2Position = new Vector2f(currentPosition.x() + tileSize.width() - MARGIN, currentPosition.y() - DELTA);
-    final var sensor1Blocked = gridComponent.isBlocked(sensor1Position);
-    final var sensor2Blocked = gridComponent.isBlocked(sensor2Position);
+    final var tileType1 = gridComponent.getTileType(sensor1Position);
+    final var tileType2 = gridComponent.getTileType(sensor2Position);
 
-    return sensor1Blocked || sensor2Blocked;
+    return (tileType1 == TileType.SOLID) || (tileType1 == TileType.LADDER_TOP)
+        || (tileType2 == TileType.SOLID) || (tileType2 == TileType.LADDER_TOP);
   }
 
   public static boolean isTopBlocked(final Matrix4f transform,
@@ -89,9 +91,9 @@ public class GridSystem {
     final var sensor1Position = new Vector2f(currentPosition.x() + MARGIN, currentPosition.y() + tileSize.height());
     final var sensor2Position =
         new Vector2f(currentPosition.x() + tileSize.width() - MARGIN, currentPosition.y() + tileSize.height());
-    final var sensor1Blocked = gridComponent.isBlocked(sensor1Position);
-    final var sensor2Blocked = gridComponent.isBlocked(sensor2Position);
+    final var tileType1 = gridComponent.getTileType(sensor1Position);
+    final var tileType2 = gridComponent.getTileType(sensor2Position);
 
-    return sensor1Blocked || sensor2Blocked;
+    return (tileType1 == TileType.SOLID) || (tileType2 == TileType.SOLID);
   }
 }

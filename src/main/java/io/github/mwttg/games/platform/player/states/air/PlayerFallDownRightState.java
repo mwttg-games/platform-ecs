@@ -6,8 +6,8 @@ import io.github.mwttg.games.platform.input.PlayerInput;
 import io.github.mwttg.games.platform.player.FacingDirection;
 import io.github.mwttg.games.platform.player.PlayerData;
 import io.github.mwttg.games.platform.player.PlayerStateComponent;
-import io.github.mwttg.games.platform.player.colision.GridComponent;
-import io.github.mwttg.games.platform.player.colision.GridSystem;
+import io.github.mwttg.games.platform.player.colision.SensorComponent;
+import io.github.mwttg.games.platform.player.colision.SensorSystem;
 import io.github.mwttg.games.platform.player.effect.PlayerEffectComponent;
 import io.github.mwttg.games.platform.player.physics.FallDown;
 import io.github.mwttg.games.platform.player.physics.MoveRight;
@@ -48,29 +48,29 @@ public final class PlayerFallDownRightState extends PlayerFallDownState {
   }
 
   @Override
-  public void update(final float deltaTime, final PlayerInput playerInput, final GridComponent gridComponent) {
+  public void update(final float deltaTime, final PlayerInput playerInput, final SensorComponent sensorComponent) {
     if (playerInput.xAxis() == 1) {
-      MoveRight.execute(deltaTime, getPlayerData(), getTransform(), gridComponent);
+      MoveRight.execute(deltaTime, getPlayerData(), getTransform(), sensorComponent);
     }
-    FallDown.execute(getInAirTime(), deltaTime, getPlayerData(), getTransform(), gridComponent);
+    FallDown.execute(getInAirTime(), deltaTime, getPlayerData(), getTransform(), sensorComponent);
     updateInAirTime(deltaTime);
   }
 
   @Override
-  public void handleStateTransitions(final PlayerInput playerInput, final GridComponent gridComponent) {
+  public void handleStateTransitions(final PlayerInput playerInput, final SensorComponent sensorComponent) {
     toFallDownLeft(playerInput);
     coyoteTimeToJumpUpRight(playerInput);
     doubleJumpToJumpUpRight(playerInput);
 
-    final var onGround = GridSystem.isGroundTouched(getTransform(), getPlayerData().getTileSize(), gridComponent);
+    final var onGround = SensorSystem.isGroundTouched(getTransform(), getPlayerData().getTileSize(), sensorComponent);
     toIdleRight(playerInput.xAxis(), onGround);
     toWalkRight(playerInput.xAxis(), onGround);
 
-    toOnLadder(playerInput, gridComponent);
+    toOnLadder(playerInput, sensorComponent);
   }
 
-  private void toOnLadder(final PlayerInput playerInput, final GridComponent gridComponent) {
-    final var onLadder = GridSystem.isOnLadder(getTransform(), getPlayerData().getTileSize(), gridComponent);
+  private void toOnLadder(final PlayerInput playerInput, final SensorComponent sensorComponent) {
+    final var onLadder = SensorSystem.isOnLadder(getTransform(), getPlayerData().getTileSize(), sensorComponent);
     if (onLadder && playerInput.yAxis() == 1) {
       getPlayerStateComponent().switchToOnLadderState();
     }

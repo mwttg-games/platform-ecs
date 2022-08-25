@@ -3,8 +3,8 @@ package io.github.mwttg.games.platform.player.physics;
 import io.github.mwttg.games.platform.Configuration;
 import io.github.mwttg.games.platform.player.PlayerData;
 import io.github.mwttg.games.platform.player.TransformUtilities;
-import io.github.mwttg.games.platform.player.colision.GridComponent;
-import io.github.mwttg.games.platform.player.colision.GridSystem;
+import io.github.mwttg.games.platform.player.colision.SensorComponent;
+import io.github.mwttg.games.platform.player.colision.SensorSystem;
 import org.joml.Matrix4f;
 
 public final class MoveRight {
@@ -15,9 +15,9 @@ public final class MoveRight {
   public static void execute(final float deltaTime,
                              final PlayerData playerData,
                              final Matrix4f transform,
-                             final GridComponent gridComponent) {
+                             final SensorComponent sensorComponent) {
     moveRight(deltaTime, transform);
-    handleCollision(playerData, gridComponent, transform);
+    handleCollision(playerData, sensorComponent, transform);
   }
 
   private static void moveRight(final float deltaTime,
@@ -27,9 +27,9 @@ public final class MoveRight {
   }
 
   private static void handleCollision(final PlayerData playerData,
-                                      final GridComponent gridComponent,
+                                      final SensorComponent sensorComponent,
                                       final Matrix4f transform) {
-    final var blocked = GridSystem.isRightBlocked(transform, playerData.getTileSize(), gridComponent);
+    final var blocked = SensorSystem.isRightBlocked(transform, playerData.getTileSize(), sensorComponent);
     if (blocked) {
       final var position = TransformUtilities.getPosition(transform);
       final var correctionX = -(position.x() - (int) position.x()); // snap to Grid

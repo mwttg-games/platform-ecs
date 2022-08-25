@@ -4,7 +4,7 @@ import io.github.mwttg.games.platform.draw.SpriteAnimationComponent;
 import io.github.mwttg.games.platform.input.PlayerInput;
 import io.github.mwttg.games.platform.player.PlayerData;
 import io.github.mwttg.games.platform.player.PlayerStateComponent;
-import io.github.mwttg.games.platform.player.colision.GridComponent;
+import io.github.mwttg.games.platform.player.colision.SensorComponent;
 import io.github.mwttg.games.platform.player.effect.PlayerEffectComponent;
 import java.util.Map;
 import org.joml.Matrix4f;
@@ -30,7 +30,7 @@ public abstract class PlayerIdleState extends PlayerOnGroundState {
   }
 
   @Override
-  public void update(final float deltaTime, final PlayerInput playerInput, final GridComponent gridComponent) {
+  public void update(final float deltaTime, final PlayerInput playerInput, final SensorComponent sensorComponent) {
     // nothing to do
   }
 }

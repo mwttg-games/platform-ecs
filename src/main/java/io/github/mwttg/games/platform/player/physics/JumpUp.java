@@ -5,8 +5,8 @@ import static io.github.mwttg.games.platform.Configuration.PLAYER_JUMP_VELOCITY;
 
 import io.github.mwttg.games.platform.player.PlayerData;
 import io.github.mwttg.games.platform.player.TransformUtilities;
-import io.github.mwttg.games.platform.player.colision.GridComponent;
-import io.github.mwttg.games.platform.player.colision.GridSystem;
+import io.github.mwttg.games.platform.player.colision.SensorComponent;
+import io.github.mwttg.games.platform.player.colision.SensorSystem;
 import org.joml.Matrix4f;
 
 public final class JumpUp {
@@ -18,9 +18,9 @@ public final class JumpUp {
                              final float deltaTime,
                              final PlayerData playerData,
                              final Matrix4f transform,
-                             final GridComponent gridComponent) {
+                             final SensorComponent sensorComponent) {
     jumpUp(inAirTime, deltaTime, transform);
-    handleCollision(playerData, gridComponent, transform);
+    handleCollision(playerData, sensorComponent, transform);
   }
 
   private static void jumpUp(final float inAirTime, final float deltaTime, final Matrix4f transform) {
@@ -33,9 +33,9 @@ public final class JumpUp {
   }
 
   public static void handleCollision(final PlayerData playerData,
-                                     final GridComponent gridComponent,
+                                     final SensorComponent sensorComponent,
                                      final Matrix4f transform) {
-    final var blocked = GridSystem.isTopBlocked(transform, playerData.getTileSize(), gridComponent);
+    final var blocked = SensorSystem.isTopBlocked(transform, playerData.getTileSize(), sensorComponent);
     if (blocked) {
       final var position = TransformUtilities.getPosition(transform);
       final var correctionY = -(position.y() - (int) position.y());

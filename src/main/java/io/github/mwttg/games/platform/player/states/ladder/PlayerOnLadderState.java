@@ -5,8 +5,8 @@ import io.github.mwttg.games.platform.input.PlayerInput;
 import io.github.mwttg.games.platform.player.FacingDirection;
 import io.github.mwttg.games.platform.player.PlayerData;
 import io.github.mwttg.games.platform.player.PlayerStateComponent;
-import io.github.mwttg.games.platform.player.colision.GridComponent;
-import io.github.mwttg.games.platform.player.colision.GridSystem;
+import io.github.mwttg.games.platform.player.colision.SensorComponent;
+import io.github.mwttg.games.platform.player.colision.SensorSystem;
 import io.github.mwttg.games.platform.player.effect.PlayerEffectComponent;
 import io.github.mwttg.games.platform.player.physics.ClimbDown;
 import io.github.mwttg.games.platform.player.physics.ClimbUp;
@@ -39,18 +39,18 @@ public class PlayerOnLadderState extends AbstractPlayerState {
   }
 
   @Override
-  public void update(final float deltaTime, final PlayerInput playerInput, final GridComponent gridComponent) {
+  public void update(final float deltaTime, final PlayerInput playerInput, final SensorComponent sensorComponent) {
     if (playerInput.yAxis() == 1) {
-      ClimbUp.execute(deltaTime, getPlayerData(), getTransform(), gridComponent);
+      ClimbUp.execute(deltaTime, getPlayerData(), getTransform(), sensorComponent);
     }
 
     if (playerInput.yAxis() == -1) {
-      ClimbDown.execute(deltaTime, getPlayerData(), getTransform(), gridComponent);
+      ClimbDown.execute(deltaTime, getPlayerData(), getTransform(), sensorComponent);
     }
   }
 
   @Override
-  public void handleStateTransitions(final PlayerInput playerInput, final GridComponent gridComponent) {
+  public void handleStateTransitions(final PlayerInput playerInput, final SensorComponent sensorComponent) {
     if (playerInput.xAxis() == -1) {
       getPlayerStateComponent().switchToWalkLeftState();
     }
@@ -67,7 +67,7 @@ public class PlayerOnLadderState extends AbstractPlayerState {
       getPlayerStateComponent().switchToJumpUpRightState();
     }
 
-    final var onLadder = GridSystem.isOnLadder(getTransform(), getPlayerData().getTileSize(), gridComponent);
+    final var onLadder = SensorSystem.isOnLadder(getTransform(), getPlayerData().getTileSize(), sensorComponent);
     if (!onLadder && getPlayerData().getFacingDirection() == FacingDirection.LEFT) {
       getPlayerStateComponent().switchToFallDownLeftState();
     }
@@ -76,7 +76,7 @@ public class PlayerOnLadderState extends AbstractPlayerState {
       getPlayerStateComponent().switchToFallDownRightState();
     }
 
-    final var onGround = GridSystem.isGroundTouchedFromLadder(getTransform(), getPlayerData().getTileSize(), gridComponent);
+    final var onGround = SensorSystem.isGroundTouchedFromLadder(getTransform(), getPlayerData().getTileSize(), sensorComponent);
     if (onGround && getPlayerData().getFacingDirection() == FacingDirection.LEFT) {
       getPlayerStateComponent().switchToIdleLeftState();
     }

@@ -4,11 +4,11 @@ import io.github.mwttg.games.opengl.basic.utilities.texture.Texture;
 import io.github.mwttg.games.platform.PlaneFactory;
 import io.github.mwttg.games.platform.draw.SpriteComponent;
 import io.github.mwttg.games.platform.draw.SpriteSystem;
-import io.github.mwttg.games.platform.player.colision.GridComponent;
+import io.github.mwttg.games.platform.player.colision.SensorComponent;
 import org.joml.Matrix4f;
 
 public record SceneEntity(Matrix4f transform, SpriteComponent spriteComponent,
-                          GridComponent gridComponent) {
+                          SensorComponent sensorComponent) {
 
   public static SceneEntity create(final String gridFilename,
                                    final String textureFilename,
@@ -16,9 +16,9 @@ public record SceneEntity(Matrix4f transform, SpriteComponent spriteComponent,
                                    final int heightInTiles) {
     final var transform = new Matrix4f().translate(0.0f, 0.0f, -1.0f);
     final SpriteComponent spriteComponent = createSpriteComponent(textureFilename, widthInTiles, heightInTiles);
-    final GridComponent gridComponent = new GridComponent(gridFilename);
+    final SensorComponent sensorComponent = new SensorComponent(gridFilename);
 
-    return new SceneEntity(transform, spriteComponent, gridComponent);
+    return new SceneEntity(transform, spriteComponent, sensorComponent);
 
   }
 

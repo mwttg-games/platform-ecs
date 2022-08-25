@@ -8,13 +8,13 @@ import java.util.Objects;
 import java.util.StringJoiner;
 import org.joml.Vector2f;
 
-public class GridComponent {
+public class SensorComponent {
 
   private final List<List<TileType>> grid;
   private final int width;
   private final int height;
 
-  public GridComponent(final String filename) {
+  public SensorComponent(final String filename) {
     final var type = new TypeReference<List<List<Integer>>>() {
     };
     final var temp = JsonFile.readFrom(filename, type);
@@ -53,7 +53,7 @@ public class GridComponent {
     if (this == o) {
       return true;
     }
-    if (!(o instanceof GridComponent that)) {
+    if (!(o instanceof SensorComponent that)) {
       return false;
     }
     return width == that.width && height == that.height && grid.equals(that.grid);
@@ -66,7 +66,7 @@ public class GridComponent {
 
   @Override
   public String toString() {
-    return new StringJoiner(", ", GridComponent.class.getSimpleName() + "[", "]")
+    return new StringJoiner(", ", SensorComponent.class.getSimpleName() + "[", "]")
         .add("grid=" + grid)
         .add("width=" + width)
         .add("height=" + height)

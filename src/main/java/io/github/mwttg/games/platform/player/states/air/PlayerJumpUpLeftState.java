@@ -6,8 +6,8 @@ import io.github.mwttg.games.platform.input.PlayerInput;
 import io.github.mwttg.games.platform.player.FacingDirection;
 import io.github.mwttg.games.platform.player.PlayerData;
 import io.github.mwttg.games.platform.player.PlayerStateComponent;
-import io.github.mwttg.games.platform.player.colision.GridComponent;
-import io.github.mwttg.games.platform.player.colision.GridSystem;
+import io.github.mwttg.games.platform.player.colision.SensorComponent;
+import io.github.mwttg.games.platform.player.colision.SensorSystem;
 import io.github.mwttg.games.platform.player.effect.PlayerEffectComponent;
 import io.github.mwttg.games.platform.player.physics.JumpUp;
 import io.github.mwttg.games.platform.player.physics.MoveLeft;
@@ -47,25 +47,25 @@ public final class PlayerJumpUpLeftState extends PlayerJumpUpState {
   }
 
   @Override
-  public void update(final float deltaTime, final PlayerInput playerInput, final GridComponent gridComponent) {
+  public void update(final float deltaTime, final PlayerInput playerInput, final SensorComponent sensorComponent) {
     if (playerInput.xAxis() == -1) {
-      MoveLeft.execute(deltaTime, getPlayerData(), getTransform(), gridComponent);
+      MoveLeft.execute(deltaTime, getPlayerData(), getTransform(), sensorComponent);
     }
-    JumpUp.execute(getInAirTime(), deltaTime, getPlayerData(), getTransform(), gridComponent);
+    JumpUp.execute(getInAirTime(), deltaTime, getPlayerData(), getTransform(), sensorComponent);
     updateInAirTime(deltaTime);
   }
 
   @Override
-  public void handleStateTransitions(final PlayerInput playerInput, final GridComponent gridComponent) {
+  public void handleStateTransitions(final PlayerInput playerInput, final SensorComponent sensorComponent) {
     toFallDownLeft();
     toJumpUpRight(playerInput);
     doubleJumpToJumpUpLeft(playerInput);
-    toFallDownLeft(gridComponent);
-    toOnLadder(playerInput, gridComponent);
+    toFallDownLeft(sensorComponent);
+    toOnLadder(playerInput, sensorComponent);
   }
 
-  private void toOnLadder(final PlayerInput playerInput, final GridComponent gridComponent) {
-    final var onLadder = GridSystem.isOnLadder(getTransform(), getPlayerData().getTileSize(), gridComponent);
+  private void toOnLadder(final PlayerInput playerInput, final SensorComponent sensorComponent) {
+    final var onLadder = SensorSystem.isOnLadder(getTransform(), getPlayerData().getTileSize(), sensorComponent);
     if (onLadder && playerInput.yAxis() == 1) {
       getPlayerStateComponent().switchToOnLadderState();
     }
@@ -77,8 +77,8 @@ public final class PlayerJumpUpLeftState extends PlayerJumpUpState {
     }
   }
 
-  private void toFallDownLeft(final GridComponent gridComponent) {
-    final var isTopBlocked = GridSystem.isTopBlocked(getTransform(), getPlayerData().getTileSize(), gridComponent);
+  private void toFallDownLeft(final SensorComponent sensorComponent) {
+    final var isTopBlocked = SensorSystem.isTopBlocked(getTransform(), getPlayerData().getTileSize(), sensorComponent);
     if (isTopBlocked) {
       getPlayerStateComponent().switchToFallDownLeftState();
     }

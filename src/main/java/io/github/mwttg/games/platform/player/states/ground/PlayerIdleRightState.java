@@ -6,6 +6,7 @@ import io.github.mwttg.games.platform.player.FacingDirection;
 import io.github.mwttg.games.platform.player.PlayerData;
 import io.github.mwttg.games.platform.player.PlayerStateComponent;
 import io.github.mwttg.games.platform.player.colision.GridComponent;
+import io.github.mwttg.games.platform.player.colision.GridSystem;
 import io.github.mwttg.games.platform.player.effect.PlayerEffectComponent;
 import java.util.Map;
 import org.joml.Matrix4f;
@@ -41,6 +42,22 @@ public final class PlayerIdleRightState extends PlayerIdleState {
     toWalkRight(playerInput);
     toWalkLeft(playerInput);
     toJumpUp(playerInput);
+    toLadderUp(playerInput, gridComponent);
+    toLadderDown(playerInput, gridComponent);
+  }
+
+  private void toLadderDown(final PlayerInput playerInput, final GridComponent gridComponent) {
+    final var aboveLadder = GridSystem.isLadderBelow(getTransform(), getPlayerData().getTileSize(), gridComponent);
+    if (aboveLadder && playerInput.yAxis() == -1) {
+      getPlayerStateComponent().switchToOnLadderState();
+    }
+  }
+
+  private void toLadderUp(final PlayerInput playerInput, final GridComponent gridComponent) {
+    final var onLadder = GridSystem.isOnLadder(getTransform(), getPlayerData().getTileSize(), gridComponent);
+    if (onLadder && playerInput.yAxis() == 1) {
+      getPlayerStateComponent().switchToOnLadderState();
+    }
   }
 
   private void toWalkRight(final PlayerInput playerInput) {

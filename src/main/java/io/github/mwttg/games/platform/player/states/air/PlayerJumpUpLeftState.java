@@ -60,9 +60,15 @@ public final class PlayerJumpUpLeftState extends PlayerJumpUpState {
     toFallDownLeft();
     toJumpUpRight(playerInput);
     doubleJumpToJumpUpLeft(playerInput);
+    toFallDownLeft(gridComponent);
+    toOnLadder(playerInput, gridComponent);
+  }
 
-    final var isTopBlocked = GridSystem.isTopBlocked(getTransform(), getPlayerData().getTileSize(), gridComponent);
-    toFallDownLeft(isTopBlocked);
+  private void toOnLadder(final PlayerInput playerInput, final GridComponent gridComponent) {
+    final var onLadder = GridSystem.isOnLadder(getTransform(), getPlayerData().getTileSize(), gridComponent);
+    if (onLadder && playerInput.yAxis() == 1) {
+      getPlayerStateComponent().switchToOnLadderState();
+    }
   }
 
   private void toFallDownLeft() {
@@ -71,7 +77,8 @@ public final class PlayerJumpUpLeftState extends PlayerJumpUpState {
     }
   }
 
-  private void toFallDownLeft(final boolean isTopBlocked) {
+  private void toFallDownLeft(final GridComponent gridComponent) {
+    final var isTopBlocked = GridSystem.isTopBlocked(getTransform(), getPlayerData().getTileSize(), gridComponent);
     if (isTopBlocked) {
       getPlayerStateComponent().switchToFallDownLeftState();
     }

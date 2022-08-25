@@ -65,6 +65,15 @@ public final class PlayerFallDownRightState extends PlayerFallDownState {
     final var onGround = GridSystem.isGroundTouched(getTransform(), getPlayerData().getTileSize(), gridComponent);
     toIdleRight(playerInput.xAxis(), onGround);
     toWalkRight(playerInput.xAxis(), onGround);
+
+    toOnLadder(playerInput, gridComponent);
+  }
+
+  private void toOnLadder(final PlayerInput playerInput, final GridComponent gridComponent) {
+    final var onLadder = GridSystem.isOnLadder(getTransform(), getPlayerData().getTileSize(), gridComponent);
+    if (onLadder && playerInput.yAxis() == 1) {
+      getPlayerStateComponent().switchToOnLadderState();
+    }
   }
 
   private void toFallDownLeft(final PlayerInput playerInput) {

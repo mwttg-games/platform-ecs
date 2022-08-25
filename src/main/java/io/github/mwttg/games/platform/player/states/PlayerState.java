@@ -16,6 +16,7 @@ public interface PlayerState {
   String FALL_RIGHT = "FALL_RIGHT";
   String FALL_LEFT = "FALL_LEFT";
   String DUST_EFFECT = "DUST_EFFECT";
+  String ON_LADDER = "ON_LADDER";
 
   void enter();
 

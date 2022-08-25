@@ -84,6 +84,18 @@ public class GridSystem {
         || (tileType2 == TileType.SOLID) || (tileType2 == TileType.LADDER_TOP);
   }
 
+  public static boolean isGroundTouchedFromLadder(final Matrix4f transform,
+                                        final TileSize tileSize,
+                                        final GridComponent gridComponent) {
+    final var currentPosition = TransformUtilities.getPosition(transform);
+    final var sensor1Position = new Vector2f(currentPosition.x() + MARGIN, currentPosition.y() - DELTA);
+    final var sensor2Position = new Vector2f(currentPosition.x() + tileSize.width() - MARGIN, currentPosition.y() - DELTA);
+    final var tileType1 = gridComponent.getTileType(sensor1Position);
+    final var tileType2 = gridComponent.getTileType(sensor2Position);
+
+    return (tileType1 == TileType.SOLID) || (tileType2 == TileType.SOLID);
+  }
+
   public static boolean isTopBlocked(final Matrix4f transform,
                                      final TileSize tileSize,
                                      final GridComponent gridComponent) {
@@ -95,5 +107,29 @@ public class GridSystem {
     final var tileType2 = gridComponent.getTileType(sensor2Position);
 
     return (tileType1 == TileType.SOLID) || (tileType2 == TileType.SOLID);
+  }
+
+  public static boolean isOnLadder(final Matrix4f transform,
+                                   final TileSize tileSize,
+                                   final GridComponent gridComponent) {
+    final var currentPosition = TransformUtilities.getPosition(transform);
+    final var centerBottom = new Vector2f(currentPosition.x() + (tileSize.width() / 2.0f), currentPosition.y());
+    final var centerTop =
+        new Vector2f(currentPosition.x() + (tileSize.width() / 2.0f), currentPosition.y() + tileSize.height());
+    final var tileType1 = gridComponent.getTileType(centerBottom);
+    final var tileType2 = gridComponent.getTileType(centerTop);
+
+    return (tileType1 == TileType.LADDER) || (tileType1 == TileType.LADDER_TOP)
+        || (tileType2 == TileType.LADDER) || (tileType2 == TileType.LADDER_TOP);
+  }
+
+  public static boolean isLadderBelow(final Matrix4f transform,
+                                   final TileSize tileSize,
+                                   final GridComponent gridComponent) {
+    final var currentPosition = TransformUtilities.getPosition(transform);
+    final var centerBottom = new Vector2f(currentPosition.x() + (tileSize.width() / 2.0f), currentPosition.y() - DELTA);
+    final var tileType1 = gridComponent.getTileType(centerBottom);
+
+    return (tileType1 == TileType.LADDER) || (tileType1 == TileType.LADDER_TOP);
   }
 }

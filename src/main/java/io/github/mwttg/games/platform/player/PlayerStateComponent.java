@@ -12,6 +12,7 @@ import io.github.mwttg.games.platform.player.states.ground.PlayerIdleLeftState;
 import io.github.mwttg.games.platform.player.states.ground.PlayerIdleRightState;
 import io.github.mwttg.games.platform.player.states.ground.PlayerWalkLeftState;
 import io.github.mwttg.games.platform.player.states.ground.PlayerWalkRightState;
+import io.github.mwttg.games.platform.player.states.ladder.PlayerOnLadderState;
 import java.util.Map;
 import org.joml.Matrix4f;
 
@@ -25,6 +26,7 @@ public class PlayerStateComponent {
   private final PlayerFallDownRightState fallDownRight;
   private final PlayerJumpUpLeftState jumpUpLeft;
   private final PlayerJumpUpRightState jumpUpRight;
+  private final PlayerOnLadderState onLadderState;
 
   private PlayerState previousState;
   private PlayerState currentState;
@@ -44,6 +46,8 @@ public class PlayerStateComponent {
     this.jumpUpLeft = new PlayerJumpUpLeftState(animationComponentByName, this, playerEffectComponent, modelMatrix, playerData);
     this.jumpUpRight =
         new PlayerJumpUpRightState(animationComponentByName, this, playerEffectComponent, modelMatrix, playerData);
+    this.onLadderState =
+        new PlayerOnLadderState(animationComponentByName, this, playerEffectComponent, modelMatrix, playerData);
 
     this.currentState = idleRight;
     this.previousState = currentState;  // to avoid npe
@@ -105,11 +109,19 @@ public class PlayerStateComponent {
     updateState(jumpUpRight, alreadyUsedAirTime);
   }
 
+  public void switchToOnLadderState() {
+    updateState(onLadderState);
+  }
+
   private void updateState(final PlayerState newState) {
     currentState.exit();
 
     previousState = currentState;
     currentState = newState;
+
+    System.out.println(String.format("previous: %-25s now: %-25s",
+        previousState.getClass().getSimpleName(),
+        currentState.getClass().getSimpleName()));
 
     currentState.enter();
   }
@@ -123,6 +135,10 @@ public class PlayerStateComponent {
 
     previousState = currentState;
     currentState = inAirState;
+
+    System.out.println(String.format("*previous: %-25s now: %-25s",
+        previousState.getClass().getSimpleName(),
+        currentState.getClass().getSimpleName()));
 
     ((PlayerInAirState) currentState).enter(alreadyUsedAirTime);
   }

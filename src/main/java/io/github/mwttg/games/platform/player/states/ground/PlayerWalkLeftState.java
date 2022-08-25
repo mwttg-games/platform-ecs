@@ -48,9 +48,23 @@ public final class PlayerWalkLeftState extends PlayerWalkState {
     toIdleLeft(playerInput);
     toWalkRight(playerInput);
     toJumpUpLeft(playerInput);
+    toFallDownLeft(gridComponent);
+    toLadderUp(playerInput, gridComponent);
+    toLadderDown(playerInput, gridComponent);
+  }
 
-    final var onGround = GridSystem.isGroundTouched(getTransform(), getPlayerData().getTileSize(), gridComponent);
-    toFallDownLeft(onGround);
+  private void toLadderDown(final PlayerInput playerInput, final GridComponent gridComponent) {
+    final var aboveLadder = GridSystem.isLadderBelow(getTransform(), getPlayerData().getTileSize(), gridComponent);
+    if (aboveLadder && playerInput.yAxis() == -1) {
+      getPlayerStateComponent().switchToOnLadderState();
+    }
+  }
+
+  private void toLadderUp(final PlayerInput playerInput, final GridComponent gridComponent) {
+    final var onLadder = GridSystem.isOnLadder(getTransform(), getPlayerData().getTileSize(), gridComponent);
+    if (onLadder && playerInput.yAxis() == 1) {
+      getPlayerStateComponent().switchToOnLadderState();
+    }
   }
 
   private void toIdleLeft(final PlayerInput playerInput) {
@@ -65,7 +79,8 @@ public final class PlayerWalkLeftState extends PlayerWalkState {
     }
   }
 
-  private void toFallDownLeft(final boolean onGround) {
+  private void toFallDownLeft(final GridComponent gridComponent) {
+    final var onGround = GridSystem.isGroundTouched(getTransform(), getPlayerData().getTileSize(), gridComponent);
     if (!onGround) {
       getPlayerStateComponent().switchToFallDownLeftState();
     }

@@ -6,7 +6,6 @@ import io.github.mwttg.games.platform.player.FacingDirection;
 import io.github.mwttg.games.platform.player.PlayerData;
 import io.github.mwttg.games.platform.player.PlayerStateComponent;
 import io.github.mwttg.games.platform.player.colision.SensorComponent;
-import io.github.mwttg.games.platform.player.colision.SensorSystem;
 import io.github.mwttg.games.platform.player.effect.PlayerEffectComponent;
 import io.github.mwttg.games.platform.player.physics.MoveRight;
 import java.util.Map;
@@ -45,50 +44,18 @@ public final class PlayerWalkRightState extends PlayerWalkState {
 
   @Override
   public void handleStateTransitions(final PlayerInput playerInput, final SensorComponent sensorComponent) {
-    toIdleRight(playerInput);
-    toWalkLeft(playerInput);
-    toJumpUpRight(playerInput);
-    toFallDownRight(sensorComponent);
-    toLadderUp(playerInput, sensorComponent);
-    toLadderDown(playerInput, sensorComponent);
-  }
-
-  private void toLadderDown(final PlayerInput playerInput, final SensorComponent sensorComponent) {
-    final var aboveLadder = SensorSystem.isLadderBelow(getTransform(), getPlayerData().getTileSize(), sensorComponent);
-    if (aboveLadder && playerInput.yAxis() == -1) {
-      getPlayerStateComponent().switchToOnLadderState();
-    }
-  }
-
-  private void toLadderUp(final PlayerInput playerInput, final SensorComponent sensorComponent) {
-    final var onLadder = SensorSystem.isOnLadder(getTransform(), getPlayerData().getTileSize(), sensorComponent);
-    if (onLadder && playerInput.yAxis() == 1) {
-      getPlayerStateComponent().switchToOnLadderState();
-    }
-  }
-
-  private void toIdleRight(final PlayerInput playerInput) {
-    if (playerInput.xAxis() == 0) {
+    if (idle(playerInput)) {
       getPlayerStateComponent().switchToIdleRightState();
-    }
-  }
-
-  private void toJumpUpRight(final PlayerInput playerInput) {
-    if (playerInput.jump()) {
-      getPlayerStateComponent().switchToJumpUpRightState();
-    }
-  }
-
-  private void toFallDownRight(final SensorComponent sensorComponent) {
-    final var onGround = SensorSystem.isGroundTouched(getTransform(), getPlayerData().getTileSize(), sensorComponent);
-    if (!onGround) {
-      getPlayerStateComponent().switchToFallDownRightState();
-    }
-  }
-
-  private void toWalkLeft(final PlayerInput playerInput) {
-    if (playerInput.xAxis() == -1) {
+    } else if (inputLeft(playerInput)) {
       getPlayerStateComponent().switchToWalkLeftState();
+    } else if (jumpUp(playerInput)) {
+      getPlayerStateComponent().switchToJumpUpRightState();
+    } else if (fallDown(sensorComponent)) {
+      getPlayerStateComponent().switchToFallDownRightState();
+    } else if (grabLadder(playerInput, sensorComponent)) {
+      getPlayerStateComponent().switchToOnLadderState();
+    } else if (goLadderDown(playerInput, sensorComponent)) {
+      getPlayerStateComponent().switchToOnLadderState();
     }
   }
 }

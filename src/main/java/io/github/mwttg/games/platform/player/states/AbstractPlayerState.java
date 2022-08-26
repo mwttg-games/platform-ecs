@@ -2,6 +2,7 @@ package io.github.mwttg.games.platform.player.states;
 
 import io.github.mwttg.games.platform.draw.SpriteAnimationComponent;
 import io.github.mwttg.games.platform.draw.SpriteAnimationSystem;
+import io.github.mwttg.games.platform.input.PlayerInput;
 import io.github.mwttg.games.platform.player.PlayerData;
 import io.github.mwttg.games.platform.player.PlayerStateComponent;
 import io.github.mwttg.games.platform.player.effect.PlayerEffectComponent;
@@ -58,5 +59,17 @@ public abstract class AbstractPlayerState implements PlayerState {
 
   protected PlayerData getPlayerData() {
     return playerData;
+  }
+
+  protected boolean inputLeft(final PlayerInput playerInput) {
+    return playerInput.xAxis() == -1;
+  }
+
+  protected boolean inputRight(final PlayerInput playerInput) {
+    return playerInput.xAxis() == 1;
+  }
+
+  protected boolean jumpUp(final PlayerInput playerInput) {
+    return  playerInput.jump();
   }
 }

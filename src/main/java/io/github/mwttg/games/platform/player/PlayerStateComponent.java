@@ -119,10 +119,6 @@ public class PlayerStateComponent {
     previousState = currentState;
     currentState = newState;
 
-    System.out.println(String.format("previous: %-25s now: %-25s",
-        previousState.getClass().getSimpleName(),
-        currentState.getClass().getSimpleName()));
-
     currentState.enter();
   }
 
@@ -135,10 +131,6 @@ public class PlayerStateComponent {
 
     previousState = currentState;
     currentState = inAirState;
-
-    System.out.println(String.format("*previous: %-25s now: %-25s",
-        previousState.getClass().getSimpleName(),
-        currentState.getClass().getSimpleName()));
 
     ((PlayerInAirState) currentState).enter(alreadyUsedAirTime);
   }

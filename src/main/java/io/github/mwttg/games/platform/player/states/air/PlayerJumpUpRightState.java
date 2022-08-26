@@ -1,13 +1,11 @@
 package io.github.mwttg.games.platform.player.states.air;
 
-import io.github.mwttg.games.platform.Configuration;
 import io.github.mwttg.games.platform.draw.SpriteAnimationComponent;
 import io.github.mwttg.games.platform.input.PlayerInput;
 import io.github.mwttg.games.platform.player.FacingDirection;
 import io.github.mwttg.games.platform.player.PlayerData;
 import io.github.mwttg.games.platform.player.PlayerStateComponent;
 import io.github.mwttg.games.platform.player.colision.SensorComponent;
-import io.github.mwttg.games.platform.player.colision.SensorSystem;
 import io.github.mwttg.games.platform.player.effect.PlayerEffectComponent;
 import io.github.mwttg.games.platform.player.physics.JumpUp;
 import io.github.mwttg.games.platform.player.physics.MoveRight;
@@ -57,44 +55,16 @@ public final class PlayerJumpUpRightState extends PlayerJumpUpState {
 
   @Override
   public void handleStateTransitions(final PlayerInput playerInput, final SensorComponent sensorComponent) {
-    toFallDownRight();
-    toJumpUpLeft(playerInput);
-    doubleJumpToJumpUpRight(playerInput);
-    toFallDownRight(sensorComponent);
-    toOnLadder(playerInput, sensorComponent);
-  }
-
-  private void toOnLadder(final PlayerInput playerInput, final SensorComponent sensorComponent) {
-    final var onLadder = SensorSystem.isOnLadder(getTransform(), getPlayerData().getTileSize(), sensorComponent);
-    if (onLadder && playerInput.yAxis() == 1) {
-      getPlayerStateComponent().switchToOnLadderState();
-    }
-  }
-
-  private void toFallDownRight() {
-    if (getInAirTime() >= Configuration.PLAYER_MAX_RISE_TIME) {
+    if (jumpHighReached()) {
       getPlayerStateComponent().switchToFallDownRightState();
-    }
-  }
-
-  private void toFallDownRight(final SensorComponent sensorComponent) {
-    final var isTopBlocked = SensorSystem.isTopBlocked(getTransform(), getPlayerData().getTileSize(), sensorComponent);
-    if (isTopBlocked) {
-      getPlayerStateComponent().switchToFallDownRightState();
-    }
-  }
-
-  private void toJumpUpLeft(final PlayerInput playerInput) {
-    if (playerInput.xAxis() == -1 && getInAirTime() < Configuration.PLAYER_MAX_RISE_TIME) {
+    } else if (inputLeft(playerInput)) {
       getPlayerStateComponent().switchToJumpUpLeftState(getInAirTime());
-    }
-  }
-
-  private void doubleJumpToJumpUpRight(final PlayerInput playerInput) {
-    if (playerInput.jump()
-        && getPlayerData().getPlayerAbility().hasDoubleJump()
-        && getPlayerData().getJumpCounter() < Configuration.PLAYER_MAX_JUMP_AMOUNT) {
-      getPlayerStateComponent().switchToJumpUpRightState();
+    } else if (topBlocked(sensorComponent)) {
+      getPlayerStateComponent().switchToFallDownLeftState();
+    } else if (doubleJump(playerInput)) {
+      getPlayerStateComponent().switchToJumpUpLeftState();
+    } else if (grabLadder(playerInput, sensorComponent)) {
+      getPlayerStateComponent().switchToOnLadderState();
     }
   }
 }

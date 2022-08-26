@@ -51,14 +51,6 @@ public class PlayerOnLadderState extends AbstractPlayerState {
 
   @Override
   public void handleStateTransitions(final PlayerInput playerInput, final SensorComponent sensorComponent) {
-    if (playerInput.xAxis() == -1) {
-      getPlayerStateComponent().switchToWalkLeftState();
-    }
-
-    if (playerInput.xAxis() == 1) {
-      getPlayerStateComponent().switchToWalkRightState();
-    }
-
     if (playerInput.jump() && getPlayerData().getFacingDirection() == FacingDirection.LEFT) {
       getPlayerStateComponent().switchToJumpUpLeftState();
     }

@@ -36,7 +36,7 @@ public abstract class PlayerInAirState extends AbstractPlayerState {
     inAirTime = alreadyUsedAirTime;
   }
 
-  protected float getInAirTime() {
+  public float getInAirTime() {
     return inAirTime;
   }
 

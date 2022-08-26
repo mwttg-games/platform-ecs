@@ -1,17 +1,14 @@
 package io.github.mwttg.games.platform.player.states.air;
 
-import io.github.mwttg.games.platform.Configuration;
 import io.github.mwttg.games.platform.draw.SpriteAnimationComponent;
 import io.github.mwttg.games.platform.input.PlayerInput;
 import io.github.mwttg.games.platform.player.FacingDirection;
 import io.github.mwttg.games.platform.player.PlayerData;
 import io.github.mwttg.games.platform.player.PlayerStateComponent;
 import io.github.mwttg.games.platform.player.colision.SensorComponent;
-import io.github.mwttg.games.platform.player.colision.SensorSystem;
 import io.github.mwttg.games.platform.player.effect.PlayerEffectComponent;
 import io.github.mwttg.games.platform.player.physics.FallDown;
 import io.github.mwttg.games.platform.player.physics.MoveLeft;
-import io.github.mwttg.games.platform.player.states.ground.PlayerOnGroundState;
 import java.util.Map;
 import org.joml.Matrix4f;
 
@@ -58,55 +55,16 @@ public final class PlayerFallDownLeftState extends PlayerFallDownState {
 
   @Override
   public void handleStateTransitions(final PlayerInput playerInput, final SensorComponent sensorComponent) {
-    toFallDownRight(playerInput);
-    coyoteTimeToJumpUpLeft(playerInput);
-    doubleJumpToJumpUpLeft(playerInput);
-
-    final var onGround = SensorSystem.isGroundTouched(getTransform(), getPlayerData().getTileSize(), sensorComponent);
-    toIdleLeft(playerInput.xAxis(), onGround);
-    toWalkLeft(playerInput.xAxis(), onGround);
-
-    toOnLadder(playerInput, sensorComponent);
-  }
-
-  private void toOnLadder(final PlayerInput playerInput, final SensorComponent sensorComponent) {
-    final var onLadder = SensorSystem.isOnLadder(getTransform(), getPlayerData().getTileSize(), sensorComponent);
-    if (onLadder && playerInput.yAxis() == 1) {
-      getPlayerStateComponent().switchToOnLadderState();
-    }
-  }
-
-  private void toFallDownRight(final PlayerInput playerInput) {
-    if (playerInput.xAxis() == 1) {
+    if (inputRight(playerInput)) {
       getPlayerStateComponent().switchToFallDownRightState(getInAirTime());
-    }
-  }
-
-  private void coyoteTimeToJumpUpLeft(final PlayerInput playerInput) {
-    if (playerInput.jump()
-        && getInAirTime() <= Configuration.COYOTE_TIME
-        && getPlayerStateComponent().getPreviousState() instanceof PlayerOnGroundState) {
+    } else if (coyoteTime(playerInput)) {
       getPlayerStateComponent().switchToJumpUpLeftState();
-    }
-  }
-
-  private void doubleJumpToJumpUpLeft(final PlayerInput playerInput) {
-    if (playerInput.jump()
-        && getPlayerData().getPlayerAbility().hasDoubleJump()
-        && getPlayerData().getJumpCounter() < Configuration.PLAYER_MAX_JUMP_AMOUNT) {
+    } else if (doubleJump(playerInput)) {
       getPlayerStateComponent().switchToJumpUpLeftState();
-    }
-  }
-
-  private void toIdleLeft(final int xAxis, final boolean onGround) {
-    if (onGround && xAxis == 0 && getPlayerData().getFacingDirection() == FacingDirection.LEFT) {
+    } else if (onGround(sensorComponent)) {
       getPlayerStateComponent().switchToIdleLeftState();
-    }
-  }
-
-  private void toWalkLeft(final int xAxis, final boolean onGround) {
-    if (onGround && xAxis == -1) {
-      getPlayerStateComponent().switchToWalkLeftState();
+    } else if (grabLadder(playerInput, sensorComponent)) {
+      getPlayerStateComponent().switchToOnLadderState();
     }
   }
 }

@@ -64,7 +64,7 @@ public final class PlayerFallDownRightState extends PlayerFallDownState {
     } else if (onGround(sensorComponent)) {
       getPlayerStateComponent().switchToIdleRightState();
     } else if (grabLadder(playerInput, sensorComponent)) {
-      getPlayerStateComponent().switchToOnLadderState();
+      getPlayerStateComponent().switchToIdleOnLadderState();
     }
   }
 }

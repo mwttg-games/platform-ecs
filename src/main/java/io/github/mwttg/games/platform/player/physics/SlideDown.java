@@ -7,9 +7,9 @@ import io.github.mwttg.games.platform.player.colision.SensorComponent;
 import io.github.mwttg.games.platform.player.colision.SensorSystem;
 import org.joml.Matrix4f;
 
-public final class ClimbDown {
+public final class SlideDown {
 
-  private ClimbDown() {
+  private SlideDown() {
   }
 
   public static void execute(final float deltaTime,

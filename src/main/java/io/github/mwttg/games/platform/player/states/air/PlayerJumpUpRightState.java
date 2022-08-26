@@ -60,11 +60,11 @@ public final class PlayerJumpUpRightState extends PlayerJumpUpState {
     } else if (inputLeft(playerInput)) {
       getPlayerStateComponent().switchToJumpUpLeftState(getInAirTime());
     } else if (topBlocked(sensorComponent)) {
-      getPlayerStateComponent().switchToFallDownLeftState();
+      getPlayerStateComponent().switchToFallDownRightState();
     } else if (doubleJump(playerInput)) {
-      getPlayerStateComponent().switchToJumpUpLeftState();
+      getPlayerStateComponent().switchToJumpUpRightState();
     } else if (grabLadder(playerInput, sensorComponent)) {
-      getPlayerStateComponent().switchToOnLadderState();
+      getPlayerStateComponent().switchToIdleOnLadderState();
     }
   }
 }

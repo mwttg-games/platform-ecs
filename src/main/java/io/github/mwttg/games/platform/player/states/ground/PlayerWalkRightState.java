@@ -53,9 +53,9 @@ public final class PlayerWalkRightState extends PlayerWalkState {
     } else if (fallDown(sensorComponent)) {
       getPlayerStateComponent().switchToFallDownRightState();
     } else if (grabLadder(playerInput, sensorComponent)) {
-      getPlayerStateComponent().switchToOnLadderState();
+      getPlayerStateComponent().switchToIdleOnLadderState();
     } else if (goLadderDown(playerInput, sensorComponent)) {
-      getPlayerStateComponent().switchToOnLadderState();
+      getPlayerStateComponent().switchToIdleOnLadderState();
     }
   }
 }

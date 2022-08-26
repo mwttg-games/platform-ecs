@@ -12,7 +12,9 @@ import io.github.mwttg.games.platform.player.states.ground.PlayerIdleLeftState;
 import io.github.mwttg.games.platform.player.states.ground.PlayerIdleRightState;
 import io.github.mwttg.games.platform.player.states.ground.PlayerWalkLeftState;
 import io.github.mwttg.games.platform.player.states.ground.PlayerWalkRightState;
-import io.github.mwttg.games.platform.player.states.ladder.PlayerOnLadderState;
+import io.github.mwttg.games.platform.player.states.ladder.PlayerClimbUpLadder;
+import io.github.mwttg.games.platform.player.states.ladder.PlayerIdleOnLadder;
+import io.github.mwttg.games.platform.player.states.ladder.PlayerSlideDownLadder;
 import java.util.Map;
 import org.joml.Matrix4f;
 
@@ -26,7 +28,9 @@ public class PlayerStateComponent {
   private final PlayerFallDownRightState fallDownRight;
   private final PlayerJumpUpLeftState jumpUpLeft;
   private final PlayerJumpUpRightState jumpUpRight;
-  private final PlayerOnLadderState onLadderState;
+  private final PlayerClimbUpLadder climbUpLadder;
+  private final PlayerSlideDownLadder slideDownLadder;
+  private final PlayerIdleOnLadder idleOnLadder;
 
   private PlayerState previousState;
   private PlayerState currentState;
@@ -46,8 +50,11 @@ public class PlayerStateComponent {
     this.jumpUpLeft = new PlayerJumpUpLeftState(animationComponentByName, this, playerEffectComponent, modelMatrix, playerData);
     this.jumpUpRight =
         new PlayerJumpUpRightState(animationComponentByName, this, playerEffectComponent, modelMatrix, playerData);
-    this.onLadderState =
-        new PlayerOnLadderState(animationComponentByName, this, playerEffectComponent, modelMatrix, playerData);
+    this.climbUpLadder =
+        new PlayerClimbUpLadder(animationComponentByName, this, playerEffectComponent, modelMatrix, playerData);
+    this.slideDownLadder =
+        new PlayerSlideDownLadder(animationComponentByName, this, playerEffectComponent, modelMatrix, playerData);
+    this.idleOnLadder = new PlayerIdleOnLadder(animationComponentByName, this, playerEffectComponent, modelMatrix, playerData);
 
     this.currentState = idleRight;
     this.previousState = currentState;  // to avoid npe
@@ -109,8 +116,16 @@ public class PlayerStateComponent {
     updateState(jumpUpRight, alreadyUsedAirTime);
   }
 
-  public void switchToOnLadderState() {
-    updateState(onLadderState);
+  public void switchToIdleOnLadderState() {
+    updateState(idleOnLadder);
+  }
+
+  public void switchToClimbUpLadderState() {
+    updateState(climbUpLadder);
+  }
+
+  public void switchToSlideDownLadderState() {
+    updateState(slideDownLadder);
   }
 
   private void updateState(final PlayerState newState) {

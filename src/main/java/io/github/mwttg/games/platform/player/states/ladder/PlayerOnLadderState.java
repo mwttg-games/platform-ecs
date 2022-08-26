@@ -8,14 +8,12 @@ import io.github.mwttg.games.platform.player.PlayerStateComponent;
 import io.github.mwttg.games.platform.player.colision.SensorComponent;
 import io.github.mwttg.games.platform.player.colision.SensorSystem;
 import io.github.mwttg.games.platform.player.effect.PlayerEffectComponent;
-import io.github.mwttg.games.platform.player.physics.ClimbDown;
-import io.github.mwttg.games.platform.player.physics.ClimbUp;
 import io.github.mwttg.games.platform.player.physics.SnapToGrid;
 import io.github.mwttg.games.platform.player.states.AbstractPlayerState;
 import java.util.Map;
 import org.joml.Matrix4f;
 
-public class PlayerOnLadderState extends AbstractPlayerState {
+public abstract class PlayerOnLadderState extends AbstractPlayerState {
 
   public PlayerOnLadderState(
       final Map<String, SpriteAnimationComponent> animationComponentByName,
@@ -27,54 +25,60 @@ public class PlayerOnLadderState extends AbstractPlayerState {
   }
 
   @Override
-  protected String getAnimationName() {
-    return ON_LADDER;
-  }
-
-  @Override
   public void enter() {
     super.enter();
     getPlayerData().resetJumpCounter();
     SnapToGrid.snapX(getTransform(), getPlayerData());
   }
 
-  @Override
-  public void update(final float deltaTime, final PlayerInput playerInput, final SensorComponent sensorComponent) {
-    if (playerInput.yAxis() == 1) {
-      ClimbUp.execute(deltaTime, getPlayerData(), getTransform(), sensorComponent);
-    }
+//  @Override
+//  public void handleStateTransitions(final PlayerInput playerInput, final SensorComponent sensorComponent) {
+//    if (playerInput.jump() && getPlayerData().getFacingDirection() == FacingDirection.LEFT) {
+//      getPlayerStateComponent().switchToJumpUpLeftState();
+//    }
+//
+//    if (playerInput.jump() && getPlayerData().getFacingDirection() == FacingDirection.RIGHT) {
+//      getPlayerStateComponent().switchToJumpUpRightState();
+//    }
+//
+//    final var onLadder = SensorSystem.isOnLadder(getTransform(), getPlayerData().getTileSize(), sensorComponent);
+//    if (!onLadder && getPlayerData().getFacingDirection() == FacingDirection.LEFT) {
+//      getPlayerStateComponent().switchToFallDownLeftState();
+//    }
+//
+//    if (!onLadder && getPlayerData().getFacingDirection() == FacingDirection.RIGHT) {
+//      getPlayerStateComponent().switchToFallDownRightState();
+//    }
+//
+//    final var onGround = SensorSystem.isGroundTouchedFromLadder(getTransform(), getPlayerData().getTileSize(), sensorComponent);
+//    if (onGround && getPlayerData().getFacingDirection() == FacingDirection.LEFT) {
+//      getPlayerStateComponent().switchToIdleLeftState();
+//    }
+//
+//    if (onGround && getPlayerData().getFacingDirection() == FacingDirection.RIGHT) {
+//      getPlayerStateComponent().switchToIdleRightState();
+//    }
+//  }
 
-    if (playerInput.yAxis() == -1) {
-      ClimbDown.execute(deltaTime, getPlayerData(), getTransform(), sensorComponent);
-    }
+  protected boolean leaveLadderDownLeft(final SensorComponent sensorComponent) {
+    final var onLadder = SensorSystem.isOnLadder(getTransform(), getPlayerData().getTileSize(), sensorComponent);
+    return !onLadder && getPlayerData().getFacingDirection() == FacingDirection.LEFT;
   }
 
-  @Override
-  public void handleStateTransitions(final PlayerInput playerInput, final SensorComponent sensorComponent) {
-    if (playerInput.jump() && getPlayerData().getFacingDirection() == FacingDirection.LEFT) {
-      getPlayerStateComponent().switchToJumpUpLeftState();
-    }
-
-    if (playerInput.jump() && getPlayerData().getFacingDirection() == FacingDirection.RIGHT) {
-      getPlayerStateComponent().switchToJumpUpRightState();
-    }
-
+  protected boolean leaveLadderDownRight(final SensorComponent sensorComponent) {
     final var onLadder = SensorSystem.isOnLadder(getTransform(), getPlayerData().getTileSize(), sensorComponent);
-    if (!onLadder && getPlayerData().getFacingDirection() == FacingDirection.LEFT) {
-      getPlayerStateComponent().switchToFallDownLeftState();
-    }
+    return !onLadder && getPlayerData().getFacingDirection() == FacingDirection.RIGHT;
+  }
 
-    if (!onLadder && getPlayerData().getFacingDirection() == FacingDirection.RIGHT) {
-      getPlayerStateComponent().switchToFallDownRightState();
-    }
+  protected boolean moveUp(final PlayerInput playerInput) {
+    return playerInput.yAxis() == 1;
+  }
 
-    final var onGround = SensorSystem.isGroundTouchedFromLadder(getTransform(), getPlayerData().getTileSize(), sensorComponent);
-    if (onGround && getPlayerData().getFacingDirection() == FacingDirection.LEFT) {
-      getPlayerStateComponent().switchToIdleLeftState();
-    }
+  protected boolean moveDown(final PlayerInput playerInput) {
+    return playerInput.yAxis() == -1;
+  }
 
-    if (onGround && getPlayerData().getFacingDirection() == FacingDirection.RIGHT) {
-      getPlayerStateComponent().switchToIdleRightState();
-    }
+  protected boolean noUpDownInput(final PlayerInput playerInput) {
+    return playerInput.yAxis() == 0;
   }
 }

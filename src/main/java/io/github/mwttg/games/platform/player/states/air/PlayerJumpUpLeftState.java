@@ -64,7 +64,7 @@ public final class PlayerJumpUpLeftState extends PlayerJumpUpState {
     } else if (doubleJump(playerInput)) {
       getPlayerStateComponent().switchToJumpUpLeftState();
     } else if (grabLadder(playerInput, sensorComponent)) {
-      getPlayerStateComponent().switchToOnLadderState();
+      getPlayerStateComponent().switchToIdleOnLadderState();
     }
   }
 }

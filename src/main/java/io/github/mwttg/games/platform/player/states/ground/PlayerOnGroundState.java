@@ -14,10 +14,10 @@ import org.joml.Matrix4f;
 public abstract class PlayerOnGroundState extends AbstractPlayerState {
 
   protected PlayerOnGroundState(final Map<String, SpriteAnimationComponent> animationComponentByName,
-                             final PlayerStateComponent playerStateComponent,
+                                final PlayerStateComponent playerStateComponent,
                                 final PlayerEffectComponent playerEffectComponent,
-                             final Matrix4f transform,
-                             final PlayerData playerData) {
+                                final Matrix4f transform,
+                                final PlayerData playerData) {
     super(animationComponentByName, playerStateComponent, playerEffectComponent, transform, playerData);
   }
 

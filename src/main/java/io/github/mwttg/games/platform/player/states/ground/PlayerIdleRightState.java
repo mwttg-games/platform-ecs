@@ -48,6 +48,8 @@ public final class PlayerIdleRightState extends PlayerIdleState {
       getPlayerStateComponent().switchToIdleOnLadderState();
     } else if (goLadderDown(playerInput, sensorComponent)) {
       getPlayerStateComponent().switchToIdleOnLadderState();
+    } else if (moveDownFromThinPlatform(playerInput, sensorComponent)) {
+      getPlayerStateComponent().switchToFallDownRightState();
     }
   }
 }

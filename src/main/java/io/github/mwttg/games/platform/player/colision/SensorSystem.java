@@ -1,135 +1,168 @@
 package io.github.mwttg.games.platform.player.colision;
 
 import io.github.mwttg.games.platform.player.TileSize;
-import io.github.mwttg.games.platform.player.TransformUtilities;
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
 
-/**
- * Basically a bunch of collision sensors (and their positions).
- * ----x---------------x----
- * |                       |
- * x                       x
- * |                       |
- * |                       |
- * |                       |
- * x                       x
- * |                       |
- * ----x---------------x----
- *     x               x
- *
- * <p>x = sensor</p>
- */
-public class SensorSystem {
+public final class SensorSystem {
 
-  private static final float MARGIN = 0.15f;
-
-  /**
-   * This is needed because we need to check if we are on the ground slightly under the player, otherwise
-   * we would have permanent switching states between walk and in air state.
-   */
-  private static final float DELTA = 0.0005f;
+  // How much can a player 'sink' into a grid cell for a thin platform ( -> 12,5% )
+  private static final float THIN_PLATFORM_DELTA = 0.1f;
 
   private SensorSystem() {
+  }
+
+  public static void update(final float deltaTime, final SensorComponent sensorComponent) {
+    sensorComponent.updateLock(deltaTime);
   }
 
   public static boolean isLeftBlocked(final Matrix4f transform,
                                       final TileSize tileSize,
                                       final SensorComponent sensorComponent) {
-    final var currentPosition = TransformUtilities.getPosition(transform);
-    final var sensor1Position = new Vector2f(currentPosition.x(), currentPosition.y() + tileSize.height() - MARGIN);
-    final var sensor2Position = new Vector2f(currentPosition.x(), currentPosition.y() + MARGIN);
-    final var tileType1 = sensorComponent.getTileType(sensor1Position);
-    final var tileType2 = sensorComponent.getTileType(sensor2Position);
+    final var leftTop = SensorPosition.getLeftTop(transform, tileSize);
+    final var leftBottom = SensorPosition.getLeftBottom(transform);
+    final var tile1 = sensorComponent.getTileType(leftTop);
+    final var tile2 = sensorComponent.getTileType(leftBottom);
 
-    return (tileType1 == TileType.SOLID) || (tileType2 == TileType.SOLID);
+    return isSolid(tile1, tile2);
   }
 
   public static boolean isRightBlocked(final Matrix4f transform,
                                        final TileSize tileSize,
                                        final SensorComponent sensorComponent) {
-    final var currentPosition = TransformUtilities.getPosition(transform);
-    final var sensor1Position =
-        new Vector2f(currentPosition.x() + tileSize.width(), currentPosition.y() + tileSize.height() - MARGIN);
-    final var sensor2Position = new Vector2f(currentPosition.x() + tileSize.width(), currentPosition.y() + MARGIN);
-    final var tileType1 = sensorComponent.getTileType(sensor1Position);
-    final var tileType2 = sensorComponent.getTileType(sensor2Position);
+    final var rightTop = SensorPosition.getRightTop(transform, tileSize);
+    final var rightBottom = SensorPosition.getRightBottom(transform, tileSize);
+    final var tile1 = sensorComponent.getTileType(rightTop);
+    final var tile2 = sensorComponent.getTileType(rightBottom);
 
-    return (tileType1 == TileType.SOLID) || (tileType2 == TileType.SOLID);
+    return isSolid(tile1, tile2);
   }
 
   public static boolean isBottomBlocked(final Matrix4f transform,
                                         final TileSize tileSize,
                                         final SensorComponent sensorComponent) {
-    final var currentPosition = TransformUtilities.getPosition(transform);
-    final var sensor1Position = new Vector2f(currentPosition.x() + MARGIN, currentPosition.y());
-    final var sensor2Position = new Vector2f(currentPosition.x() + tileSize.width() - MARGIN, currentPosition.y());
-    final var tileType1 = sensorComponent.getTileType(sensor1Position);
-    final var tileType2 = sensorComponent.getTileType(sensor2Position);
+    final var bottomLeft = SensorPosition.getBottomLeft(transform);
+    final var bottomRight = SensorPosition.getBottomRight(transform, tileSize);
+    final var tile1 = sensorComponent.getTileType(bottomLeft);
+    final var tile2 = sensorComponent.getTileType(bottomRight);
 
-    return (tileType1 == TileType.SOLID) || (tileType1 == TileType.LADDER_TOP)
-        || (tileType2 == TileType.SOLID) || (tileType2 == TileType.LADDER_TOP);
+    return isSolid(tile1, tile2) || isLadderTopOnly(tile1, tile2)
+        || isOnThinPlatform(tile1, bottomLeft, sensorComponent)
+        || isOnThinPlatform(tile2, bottomRight, sensorComponent);
   }
 
   public static boolean isGroundTouched(final Matrix4f transform,
                                         final TileSize tileSize,
                                         final SensorComponent sensorComponent) {
-    final var currentPosition = TransformUtilities.getPosition(transform);
-    final var sensor1Position = new Vector2f(currentPosition.x() + MARGIN, currentPosition.y() - DELTA);
-    final var sensor2Position = new Vector2f(currentPosition.x() + tileSize.width() - MARGIN, currentPosition.y() - DELTA);
-    final var tileType1 = sensorComponent.getTileType(sensor1Position);
-    final var tileType2 = sensorComponent.getTileType(sensor2Position);
+    final var groundLeft = SensorPosition.getGroundLeft(transform);
+    final var groundRight = SensorPosition.getGroundRight(transform, tileSize);
+    final var tile1 = sensorComponent.getTileType(groundLeft);
+    final var tile2 = sensorComponent.getTileType(groundRight);
 
-    return (tileType1 == TileType.SOLID) || (tileType1 == TileType.LADDER_TOP)
-        || (tileType2 == TileType.SOLID) || (tileType2 == TileType.LADDER_TOP);
+    return isSolid(tile1, tile2) || isLadderTopOnly(tile1, tile2)
+        || isOnThinPlatform(tile1, groundLeft, sensorComponent)
+        || isOnThinPlatform(tile2, groundRight, sensorComponent);
   }
 
   public static boolean isGroundTouchedFromLadder(final Matrix4f transform,
-                                        final TileSize tileSize,
-                                        final SensorComponent sensorComponent) {
-    final var currentPosition = TransformUtilities.getPosition(transform);
-    final var sensor1Position = new Vector2f(currentPosition.x() + MARGIN, currentPosition.y() - DELTA);
-    final var sensor2Position = new Vector2f(currentPosition.x() + tileSize.width() - MARGIN, currentPosition.y() - DELTA);
-    final var tileType1 = sensorComponent.getTileType(sensor1Position);
-    final var tileType2 = sensorComponent.getTileType(sensor2Position);
+                                                  final TileSize tileSize,
+                                                  final SensorComponent sensorComponent) {
+    final var groundLeft = SensorPosition.getGroundLeft(transform);
+    final var groundRight = SensorPosition.getGroundRight(transform, tileSize);
+    final var tile1 = sensorComponent.getTileType(groundLeft);
+    final var tile2 = sensorComponent.getTileType(groundRight);
 
-    return (tileType1 == TileType.SOLID) || (tileType2 == TileType.SOLID);
+    return isSolid(tile1, tile2);
   }
 
   public static boolean isTopBlocked(final Matrix4f transform,
                                      final TileSize tileSize,
                                      final SensorComponent sensorComponent) {
-    final var currentPosition = TransformUtilities.getPosition(transform);
-    final var sensor1Position = new Vector2f(currentPosition.x() + MARGIN, currentPosition.y() + tileSize.height());
-    final var sensor2Position =
-        new Vector2f(currentPosition.x() + tileSize.width() - MARGIN, currentPosition.y() + tileSize.height());
-    final var tileType1 = sensorComponent.getTileType(sensor1Position);
-    final var tileType2 = sensorComponent.getTileType(sensor2Position);
+    final var topLeft = SensorPosition.getTopLeft(transform, tileSize);
+    final var topRight = SensorPosition.getTopRight(transform, tileSize);
+    final var tile1 = sensorComponent.getTileType(topLeft);
+    final var tile2 = sensorComponent.getTileType(topRight);
 
-    return (tileType1 == TileType.SOLID) || (tileType2 == TileType.SOLID);
+    return isSolid(tile1, tile2);
   }
 
   public static boolean isOnLadder(final Matrix4f transform,
                                    final TileSize tileSize,
                                    final SensorComponent sensorComponent) {
-    final var currentPosition = TransformUtilities.getPosition(transform);
-    final var centerBottom = new Vector2f(currentPosition.x() + (tileSize.width() / 2.0f), currentPosition.y());
-    final var centerTop =
-        new Vector2f(currentPosition.x() + (tileSize.width() / 2.0f), currentPosition.y() + tileSize.height());
-    final var tileType1 = sensorComponent.getTileType(centerBottom);
-    final var tileType2 = sensorComponent.getTileType(centerTop);
+    final var ladderTop = SensorPosition.getLadderTop(transform, tileSize);
+    final var ladderBottom = SensorPosition.getLadderBottom(transform, tileSize);
+    final var tile1 = sensorComponent.getTileType(ladderTop);
+    final var tile2 = sensorComponent.getTileType(ladderBottom);
 
-    return (tileType1 == TileType.LADDER) || (tileType1 == TileType.LADDER_TOP)
-        || (tileType2 == TileType.LADDER) || (tileType2 == TileType.LADDER_TOP);
+    return isLadder(tile1, tile2);
   }
 
   public static boolean isLadderBelow(final Matrix4f transform,
-                                   final TileSize tileSize,
-                                   final SensorComponent sensorComponent) {
-    final var currentPosition = TransformUtilities.getPosition(transform);
-    final var centerBottom = new Vector2f(currentPosition.x() + (tileSize.width() / 2.0f), currentPosition.y() - DELTA);
-    final var tileType1 = sensorComponent.getTileType(centerBottom);
+                                      final TileSize tileSize,
+                                      final SensorComponent sensorComponent) {
+    final var centerBottom = SensorPosition.getGroundCenter(transform, tileSize);
+    final var tile = sensorComponent.getTileType(centerBottom);
 
-    return (tileType1 == TileType.LADDER) || (tileType1 == TileType.LADDER_TOP);
+    return isLadder(tile);
+  }
+
+  public static boolean isOnThinPlatform(final Matrix4f transform,
+                                         final TileSize tileSize,
+                                         final SensorComponent sensorComponent) {
+    final var groundLeft = SensorPosition.getGroundLeft(transform);
+    final var groundRight = SensorPosition.getGroundRight(transform, tileSize);
+    final var tile1 = sensorComponent.getTileType(groundLeft);
+    final var tile2 = sensorComponent.getTileType(groundRight);
+
+    return isThinPlatform(tile1, tile2);
+  }
+
+  private static boolean isOnThinPlatform(final TileType tile,
+                                          final Vector2f position,
+                                          final SensorComponent sensorComponent) {
+    final var inGridCell = 1 - (position.y - ((int) position.y()));
+    return (tile == TileType.THIN_PLATFORM)
+        && (inGridCell < THIN_PLATFORM_DELTA)
+        && !sensorComponent.isThinPlatformLocked();
+  }
+
+  private static boolean isThinPlatform(final TileType... tileTypes) {
+    for (final TileType type : tileTypes) {
+      if (type == TileType.THIN_PLATFORM) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  private static boolean isLadderTopOnly(final TileType... tileTypes) {
+    for (final TileType type : tileTypes) {
+      if (type == TileType.LADDER_TOP) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  private static boolean isLadder(final TileType... tileTypes) {
+    for (final TileType type : tileTypes) {
+      if (type == TileType.LADDER || type == TileType.LADDER_TOP) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  private static boolean isSolid(final TileType... tileTypes) {
+    for (final TileType type : tileTypes) {
+      if (type == TileType.SOLID) {
+        return true;
+      }
+    }
+
+    return false;
   }
 }

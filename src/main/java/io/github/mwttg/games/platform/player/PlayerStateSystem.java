@@ -2,6 +2,7 @@ package io.github.mwttg.games.platform.player;
 
 import io.github.mwttg.games.platform.input.PlayerInputSystem;
 import io.github.mwttg.games.platform.player.colision.SensorComponent;
+import io.github.mwttg.games.platform.player.colision.SensorSystem;
 
 public final class PlayerStateSystem {
 
@@ -15,5 +16,6 @@ public final class PlayerStateSystem {
     final var playerInput = PlayerInputSystem.getPlayerInput(windowId);
     playerStateComponent.getCurrentState().handleStateTransitions(playerInput, sensorComponent);
     playerStateComponent.getCurrentState().update(deltaTime, playerInput, sensorComponent);
+    SensorSystem.update(deltaTime, sensorComponent);
   }
 }

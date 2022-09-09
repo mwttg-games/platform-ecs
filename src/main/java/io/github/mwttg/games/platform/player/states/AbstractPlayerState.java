@@ -70,6 +70,6 @@ public abstract class AbstractPlayerState implements PlayerState {
   }
 
   protected boolean jumpUp(final PlayerInput playerInput) {
-    return  playerInput.jump();
+    return  playerInput.jump() && playerInput.yAxis() != -1;
   }
 }

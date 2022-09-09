@@ -8,7 +8,9 @@ public enum TileType {
 
   LADDER_TOP(2),
 
-  LADDER(3);
+  LADDER(3),
+
+  THIN_PLATFORM(4);
 
   TileType(final int index) {
   }
@@ -19,6 +21,7 @@ public enum TileType {
       case 1 -> SOLID;
       case 2 -> LADDER_TOP;
       case 3 -> LADDER;
+      case 4 -> THIN_PLATFORM;
       default -> throw new IllegalArgumentException("no TileType found for index: " + index);
     };
   }

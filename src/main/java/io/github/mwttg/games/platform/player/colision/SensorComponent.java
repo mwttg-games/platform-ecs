@@ -13,6 +13,7 @@ public class SensorComponent {
   private final List<List<TileType>> grid;
   private final int width;
   private final int height;
+  private final ThinPlatformLock thinPlatformLock;
 
   public SensorComponent(final String filename) {
     final var type = new TypeReference<List<List<Integer>>>() {
@@ -21,6 +22,7 @@ public class SensorComponent {
     this.height = temp.size();
     this.width = temp.get(0).size();
     this.grid = createTileTypes(temp);
+    this.thinPlatformLock = new ThinPlatformLock();
   }
 
   private List<List<TileType>> createTileTypes(final List<List<Integer>> source) {
@@ -48,28 +50,15 @@ public class SensorComponent {
     }
   }
 
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (!(o instanceof SensorComponent that)) {
-      return false;
-    }
-    return width == that.width && height == that.height && grid.equals(that.grid);
+  public void updateLock(final float deltaTime) {
+    thinPlatformLock.update(deltaTime);
   }
 
-  @Override
-  public int hashCode() {
-    return Objects.hash(grid, width, height);
+  public boolean isThinPlatformLocked() {
+    return thinPlatformLock.isLocked();
   }
 
-  @Override
-  public String toString() {
-    return new StringJoiner(", ", SensorComponent.class.getSimpleName() + "[", "]")
-        .add("grid=" + grid)
-        .add("width=" + width)
-        .add("height=" + height)
-        .toString();
+  public void lockThinPlatform() {
+    thinPlatformLock.lock();
   }
 }

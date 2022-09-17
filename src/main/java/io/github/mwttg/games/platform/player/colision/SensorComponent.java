@@ -4,8 +4,6 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import io.github.mwttg.games.basic.utilities.files.JsonFile;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-import java.util.StringJoiner;
 import org.joml.Vector2f;
 
 public class SensorComponent {
@@ -59,6 +57,6 @@ public class SensorComponent {
   }
 
   public void lockThinPlatform() {
-    thinPlatformLock.lock();
+    thinPlatformLock.lockPlatform();
   }
 }

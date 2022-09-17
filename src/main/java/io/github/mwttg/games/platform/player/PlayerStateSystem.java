@@ -13,9 +13,9 @@ public final class PlayerStateSystem {
                             final PlayerStateComponent playerStateComponent,
                             final float deltaTime,
                             final SensorComponent sensorComponent) {
+    SensorSystem.update(deltaTime, sensorComponent);
     final var playerInput = PlayerInputSystem.getPlayerInput(windowId);
     playerStateComponent.getCurrentState().handleStateTransitions(playerInput, sensorComponent);
     playerStateComponent.getCurrentState().update(deltaTime, playerInput, sensorComponent);
-    SensorSystem.update(deltaTime, sensorComponent);
   }
 }

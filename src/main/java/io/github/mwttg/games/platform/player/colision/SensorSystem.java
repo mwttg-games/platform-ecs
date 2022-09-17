@@ -2,12 +2,8 @@ package io.github.mwttg.games.platform.player.colision;
 
 import io.github.mwttg.games.platform.player.TileSize;
 import org.joml.Matrix4f;
-import org.joml.Vector2f;
 
 public final class SensorSystem {
-
-  // How much can a player 'sink' into a grid cell for a thin platform ( -> 12,5% )
-  private static final float THIN_PLATFORM_DELTA = 0.1f;
 
   private SensorSystem() {
   }
@@ -47,8 +43,8 @@ public final class SensorSystem {
     final var tile2 = sensorComponent.getTileType(bottomRight);
 
     return isSolid(tile1, tile2) || isLadderTopOnly(tile1, tile2)
-        || isOnThinPlatform(tile1, bottomLeft, sensorComponent)
-        || isOnThinPlatform(tile2, bottomRight, sensorComponent);
+        || isOnThinPlatform(tile1, sensorComponent)
+        || isOnThinPlatform(tile2, sensorComponent);
   }
 
   public static boolean isGroundTouched(final Matrix4f transform,
@@ -60,8 +56,8 @@ public final class SensorSystem {
     final var tile2 = sensorComponent.getTileType(groundRight);
 
     return isSolid(tile1, tile2) || isLadderTopOnly(tile1, tile2)
-        || isOnThinPlatform(tile1, groundLeft, sensorComponent)
-        || isOnThinPlatform(tile2, groundRight, sensorComponent);
+        || isOnThinPlatform(tile1, sensorComponent)
+        || isOnThinPlatform(tile2, sensorComponent);
   }
 
   public static boolean isGroundTouchedFromLadder(final Matrix4f transform,
@@ -118,11 +114,8 @@ public final class SensorSystem {
   }
 
   private static boolean isOnThinPlatform(final TileType tile,
-                                          final Vector2f position,
                                           final SensorComponent sensorComponent) {
-    final var inGridCell = 1 - (position.y - ((int) position.y()));
     return (tile == TileType.THIN_PLATFORM)
-        && (inGridCell < THIN_PLATFORM_DELTA)
         && !sensorComponent.isThinPlatformLocked();
   }
 

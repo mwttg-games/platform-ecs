@@ -18,7 +18,8 @@ public class ThinPlatformLock {
     lock = false;
   }
 
-  public void lock() {
+  // platform is no longer 'ground', so the player can fall through
+  public void lockPlatform() {
     duration = 0;
     lock = true;
   }

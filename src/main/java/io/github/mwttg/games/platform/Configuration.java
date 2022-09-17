@@ -12,5 +12,5 @@ public interface Configuration {
   float PLAYER_MAX_RISE_TIME = PLAYER_JUMP_VELOCITY / JUMP_UP_GRAVITY;
   int PLAYER_MAX_JUMP_AMOUNT = 2;
   float COYOTE_TIME = 0.1f;
-  float THIN_PLATFORM_LOCK = 0.2f; // time in ms
+  float THIN_PLATFORM_LOCK = 0.3f; // time in ms
 }

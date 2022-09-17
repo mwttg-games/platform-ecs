@@ -24,7 +24,7 @@ public final class PlayerSlideDownLadder extends PlayerOnLadderState {
 
   @Override
   protected String getAnimationName() {
-    return ON_LADDER;
+    return SLIDE_LADDER_DOWN;
   }
 
   @Override

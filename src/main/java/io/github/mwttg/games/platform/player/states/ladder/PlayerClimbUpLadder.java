@@ -22,7 +22,7 @@ public final class PlayerClimbUpLadder extends PlayerOnLadderState {
 
   @Override
   protected String getAnimationName() {
-    return ON_LADDER;
+    return CLIMB_LADDER_UP;
   }
 
   @Override

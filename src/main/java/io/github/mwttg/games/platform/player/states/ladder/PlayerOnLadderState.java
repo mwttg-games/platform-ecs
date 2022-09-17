@@ -31,35 +31,6 @@ public abstract class PlayerOnLadderState extends AbstractPlayerState {
     SnapToGrid.snapX(getTransform(), getPlayerData());
   }
 
-//  @Override
-//  public void handleStateTransitions(final PlayerInput playerInput, final SensorComponent sensorComponent) {
-//    if (playerInput.jump() && getPlayerData().getFacingDirection() == FacingDirection.LEFT) {
-//      getPlayerStateComponent().switchToJumpUpLeftState();
-//    }
-//
-//    if (playerInput.jump() && getPlayerData().getFacingDirection() == FacingDirection.RIGHT) {
-//      getPlayerStateComponent().switchToJumpUpRightState();
-//    }
-//
-//    final var onLadder = SensorSystem.isOnLadder(getTransform(), getPlayerData().getTileSize(), sensorComponent);
-//    if (!onLadder && getPlayerData().getFacingDirection() == FacingDirection.LEFT) {
-//      getPlayerStateComponent().switchToFallDownLeftState();
-//    }
-//
-//    if (!onLadder && getPlayerData().getFacingDirection() == FacingDirection.RIGHT) {
-//      getPlayerStateComponent().switchToFallDownRightState();
-//    }
-//
-//    final var onGround = SensorSystem.isGroundTouchedFromLadder(getTransform(), getPlayerData().getTileSize(), sensorComponent);
-//    if (onGround && getPlayerData().getFacingDirection() == FacingDirection.LEFT) {
-//      getPlayerStateComponent().switchToIdleLeftState();
-//    }
-//
-//    if (onGround && getPlayerData().getFacingDirection() == FacingDirection.RIGHT) {
-//      getPlayerStateComponent().switchToIdleRightState();
-//    }
-//  }
-
   protected boolean leaveLadderDownLeft(final SensorComponent sensorComponent) {
     final var onLadder = SensorSystem.isOnLadder(getTransform(), getPlayerData().getTileSize(), sensorComponent);
     return !onLadder && getPlayerData().getFacingDirection() == FacingDirection.LEFT;

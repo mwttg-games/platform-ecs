@@ -40,7 +40,6 @@ public abstract class PlayerJumpUpState extends PlayerInAirState {
 
   protected boolean doubleJump(final PlayerInput playerInput) {
     return playerInput.jump()
-        //  && getInAirTime() > 0.2
         && getPlayerData().getPlayerAbility().hasDoubleJump()
         && getPlayerData().getJumpCounter() < Configuration.PLAYER_MAX_JUMP_AMOUNT;
   }

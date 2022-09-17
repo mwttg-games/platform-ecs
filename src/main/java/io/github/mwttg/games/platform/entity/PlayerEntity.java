@@ -30,6 +30,14 @@ public record PlayerEntity(long windowId,
         playerData);
   }
 
+  public static PlayerEntity create(final long windowId,
+                                    final float x,
+                                    final float y,
+                                    final String jsonDefinitionFile) {
+    final var animations = PlayerDefinition.createAnimationComponentsByName(jsonDefinitionFile);
+    return create(windowId, animations, x, y);
+  }
+
   public void draw(final Matrix4f viewMatrix, final Matrix4f projectionMatrix) {
     playerStateComponent.getCurrentState().draw(transform, viewMatrix, projectionMatrix);
     PlayerEffectSystem.draw(playerEffectComponent, viewMatrix, projectionMatrix);

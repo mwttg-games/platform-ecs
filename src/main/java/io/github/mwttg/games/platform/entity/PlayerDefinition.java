@@ -25,7 +25,7 @@ public record PlayerDefinition(TileSize tileSize, Map<String, AnimationDefinitio
       final var value = entry.getValue();
 
       if (value.frames() != value.timings().size()) {
-        throw new RuntimeException("player definition file is wrong (frames != timings(count))");
+        throw new RuntimeException("player definition file is wrong (frames != timings (count))");
       }
 
       final var plane = MeshFactory.createAnimatedSprite(value.frames(), tileSize.width(), tileSize.height());

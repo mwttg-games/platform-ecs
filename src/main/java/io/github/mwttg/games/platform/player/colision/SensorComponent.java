@@ -44,7 +44,7 @@ public class SensorComponent {
     if (x >= 0 && x < width && y >= 0 && y < height) {
       return grid.get(y).get(x);
     } else {
-      throw new RuntimeException("Outside of the GRID");
+      throw new RuntimeException("Outside of the GRID (position was x = '" + x + "' y = '" + y + "')");
     }
   }
 

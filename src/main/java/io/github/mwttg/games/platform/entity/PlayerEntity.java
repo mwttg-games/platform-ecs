@@ -47,4 +47,8 @@ public record PlayerEntity(long windowId,
     PlayerStateSystem.update(windowId, playerStateComponent, deltaTime, sensorComponent);
     PlayerEffectSystem.update(playerEffectComponent);
   }
+
+  public void setPosition(float x, float y) {
+    transform.translation(x, y, 0.0f);
+  }
 }

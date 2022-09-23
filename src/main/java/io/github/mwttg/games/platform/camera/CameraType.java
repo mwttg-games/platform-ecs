@@ -1,4 +1,4 @@
-package io.github.mwttg.games.platform.level;
+package io.github.mwttg.games.platform.camera;
 
 public enum CameraType {
 

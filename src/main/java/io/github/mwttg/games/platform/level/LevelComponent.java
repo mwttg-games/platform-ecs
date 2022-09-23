@@ -1,5 +1,6 @@
 package io.github.mwttg.games.platform.level;
 
+import io.github.mwttg.games.platform.camera.CameraType;
 import io.github.mwttg.games.platform.draw.SpriteComponent;
 import io.github.mwttg.games.platform.entity.LevelDefinition;
 import io.github.mwttg.games.platform.player.colision.SensorComponent;

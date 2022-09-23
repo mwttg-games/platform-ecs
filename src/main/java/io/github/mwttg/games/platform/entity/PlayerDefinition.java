@@ -30,7 +30,9 @@ public record PlayerDefinition(TileSize tileSize, Map<String, AnimationDefinitio
 
       final var plane = MeshFactory.createAnimatedSprite(value.frames(), tileSize.width(), tileSize.height());
       final var textureId = Texture.create(value.spriteSheet());
-      final var component = SpriteAnimationComponent.create(plane.geometry(), plane.textureCoordinates(), textureId, value.timings());
+      final var component = SpriteAnimationComponent.create(plane.geometry(),
+          plane.textureCoordinates(),
+          textureId, value.timings());
       result.put(key, component);
     }
 

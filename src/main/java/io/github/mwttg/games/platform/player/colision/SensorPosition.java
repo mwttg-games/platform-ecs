@@ -14,6 +14,7 @@ public final class SensorPosition {
   }
 
   /**
+   * Sensor position.
    * ---------------
    * |             |
    * x             |
@@ -28,6 +29,7 @@ public final class SensorPosition {
   }
 
   /**
+   * Sensor position.
    * ---------------
    * |             |
    * |             |
@@ -42,6 +44,7 @@ public final class SensorPosition {
   }
 
   /**
+   * Sensor position.
    * ---------------
    * |             |
    * |             x
@@ -56,6 +59,7 @@ public final class SensorPosition {
   }
 
   /**
+   * Sensor position.
    * ---------------
    * |             |
    * |             |
@@ -70,6 +74,7 @@ public final class SensorPosition {
   }
 
   /**
+   * Sensor position.
    * ---------------
    * |             |
    * |             |
@@ -84,6 +89,7 @@ public final class SensorPosition {
   }
 
   /**
+   * Sensor position.
    * ---------------
    * |             |
    * |             |
@@ -98,6 +104,7 @@ public final class SensorPosition {
   }
 
   /**
+   * Sensor position.
    * ---x-----------
    * |             |
    * |             |
@@ -112,6 +119,7 @@ public final class SensorPosition {
   }
 
   /**
+   * Sensor position.
    * -----------x---
    * |             |
    * |             |
@@ -126,6 +134,7 @@ public final class SensorPosition {
   }
 
   /**
+   * Sensor position.
    * ---------------
    * |             |
    * |             |
@@ -141,6 +150,7 @@ public final class SensorPosition {
   }
 
   /**
+   * Sensor position.
    * ---------------
    * |             |
    * |             |
@@ -156,6 +166,7 @@ public final class SensorPosition {
   }
 
   /**
+   * Sensor position.
    * ---------------
    * |             |
    * |             |
@@ -171,6 +182,7 @@ public final class SensorPosition {
   }
 
   /**
+   * Sensor position.
    * ---------------
    * |             |
    * |             |
@@ -185,6 +197,7 @@ public final class SensorPosition {
   }
 
   /**
+   * Sensor position.
    * ---------------
    * |      x      |
    * |             |

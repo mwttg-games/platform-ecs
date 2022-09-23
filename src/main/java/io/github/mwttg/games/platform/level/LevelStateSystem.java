@@ -29,6 +29,9 @@ public class LevelStateSystem {
   private static Rectanglef playerCollisionBox(final PlayerEntity playerEntity) {
     final var tileSize = playerEntity.playerData().getTileSize();
     final var position = TransformUtilities.getPosition(playerEntity.transform());
-    return new Rectanglef(position.x() + SHRINK, position.y(), position.x() + tileSize.width() - SHRINK, position.y() + tileSize.height());
+    return new Rectanglef(position.x() + SHRINK,
+        position.y(),
+        position.x() + tileSize.width() - SHRINK,
+        position.y() + tileSize.height());
   }
 }

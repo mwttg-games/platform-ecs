@@ -1,7 +1,5 @@
-package io.github.mwttg.games.platform.level;
+package io.github.mwttg.games.platform.camera;
 
-import io.github.mwttg.games.platform.camera.FixedViewMatrix;
-import io.github.mwttg.games.platform.camera.ScrollViewMatrix;
 import io.github.mwttg.games.platform.entity.PlayerEntity;
 import io.github.mwttg.games.platform.entity.WorldEntity;
 import org.joml.Matrix4f;

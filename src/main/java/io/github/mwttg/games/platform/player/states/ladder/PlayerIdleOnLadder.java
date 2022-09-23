@@ -38,8 +38,9 @@ public final class PlayerIdleOnLadder extends PlayerOnLadderState {
       getPlayerStateComponent().switchToSlideDownLadderState();
     } else if (jumpLeft(playerInput)) {
       getPlayerStateComponent().switchToJumpUpLeftState();
-    } else if (jumpRight(playerInput))
+    } else if (jumpRight(playerInput)) {
       getPlayerStateComponent().switchToJumpUpRightState();
+    }
   }
 
   private boolean jumpLeft(final PlayerInput playerInput) {

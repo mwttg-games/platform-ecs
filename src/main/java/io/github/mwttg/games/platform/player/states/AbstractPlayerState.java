@@ -1,7 +1,6 @@
 package io.github.mwttg.games.platform.player.states;
 
-import io.github.mwttg.games.platform.draw.SpriteAnimationComponent;
-import io.github.mwttg.games.platform.draw.SpriteAnimationSystem;
+import io.github.mwttg.games.platform.draw.Drawable;
 import io.github.mwttg.games.platform.input.PlayerInput;
 import io.github.mwttg.games.platform.player.PlayerData;
 import io.github.mwttg.games.platform.player.PlayerStateComponent;
@@ -11,18 +10,18 @@ import org.joml.Matrix4f;
 
 public abstract class AbstractPlayerState implements PlayerState {
 
-  private final Map<String, SpriteAnimationComponent> animationComponentByName;
+  private final Map<String, Drawable> animationComponentByName;
   private final PlayerStateComponent playerStateComponent;
   private final PlayerEffectComponent playerEffectComponent;
   private final Matrix4f transform;
   private final PlayerData playerData;
 
-  public AbstractPlayerState(final Map<String, SpriteAnimationComponent> animationComponentByName,
+  public AbstractPlayerState(final Map<String, Drawable> drawableByName,
                              final PlayerStateComponent playerStateComponent,
                              final PlayerEffectComponent playerEffectComponent,
                              final Matrix4f transform,
                              final PlayerData playerData) {
-    this.animationComponentByName = animationComponentByName;
+    this.animationComponentByName = drawableByName;
     this.playerStateComponent = playerStateComponent;
     this.playerEffectComponent = playerEffectComponent;
     this.transform = transform;
@@ -41,8 +40,7 @@ public abstract class AbstractPlayerState implements PlayerState {
 
   @Override
   public void draw(final Matrix4f model, final Matrix4f view, final Matrix4f projection) {
-    final var animation = animationComponentByName.get(getAnimationName());
-    SpriteAnimationSystem.draw(animation, model, view, projection);
+    animationComponentByName.get(getAnimationName()).draw(model, view, projection);
   }
 
   protected PlayerStateComponent getPlayerStateComponent() {
@@ -70,6 +68,6 @@ public abstract class AbstractPlayerState implements PlayerState {
   }
 
   protected boolean jumpUp(final PlayerInput playerInput) {
-    return  playerInput.jump() && playerInput.yAxis() != -1;
+    return playerInput.jump() && playerInput.yAxis() != -1;
   }
 }

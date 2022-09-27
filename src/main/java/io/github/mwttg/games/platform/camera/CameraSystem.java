@@ -8,12 +8,12 @@ public final class CameraSystem {
 
   public static Matrix4f getViewMatrix(final WorldEntity worldEntity, final PlayerEntity playerEntity) {
     final var transform = playerEntity.transform();
-    final var component = worldEntity.levelStateComponent().getLevelComponent();
+    final var scene = worldEntity.getCurrentScene();
 
-    if (component.cameraType() == CameraType.FIXED) {
+    if (scene.cameraType() == CameraType.FIXED) {
       return FixedViewMatrix.get();
     } else {
-      return ScrollViewMatrix.get(transform, component);
+      return ScrollViewMatrix.get(transform, scene);
     }
   }
 }

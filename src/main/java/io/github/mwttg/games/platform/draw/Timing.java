@@ -4,24 +4,16 @@ import java.util.List;
 import java.util.Objects;
 import java.util.StringJoiner;
 
-/**
- * A data container (or state) for Sprite animations. The delay of each frame is defined by the {@link List}
- * delaysInMs (The items in that list, the size, also defines how many frames are existing for this animation).
- */
-public class SpriteAnimationTimingComponent {
+public class Timing {
 
   private final List<Integer> delaysInMs;
   private final int maxSprites;
   private int currentFrame;
   private long lastTick;
 
-  public SpriteAnimationTimingComponent(final List<Integer> delaysInMs) {
-    this(delaysInMs, 0);
-  }
-
-  public SpriteAnimationTimingComponent(final List<Integer> delaysInMs, final int currentFrame) {
+  public Timing(final List<Integer> delaysInMs) {
     this.delaysInMs = delaysInMs;
-    this.currentFrame = currentFrame;
+    this.currentFrame = 0;
     this.maxSprites = delaysInMs.size();
     this.lastTick = System.currentTimeMillis();
   }
@@ -45,15 +37,15 @@ public class SpriteAnimationTimingComponent {
   }
 
   @Override
-  public boolean equals(Object o) {
+  public boolean equals(final Object o) {
     if (this == o) {
       return true;
     }
-    if (!(o instanceof SpriteAnimationTimingComponent that)) {
+    if (!(o instanceof final Timing timing)) {
       return false;
     }
-    return maxSprites == that.maxSprites && currentFrame == that.currentFrame && lastTick == that.lastTick
-        && delaysInMs.equals(that.delaysInMs);
+    return maxSprites == timing.maxSprites && currentFrame == timing.currentFrame && lastTick == timing.lastTick
+        && delaysInMs.equals(timing.delaysInMs);
   }
 
   @Override
@@ -63,7 +55,7 @@ public class SpriteAnimationTimingComponent {
 
   @Override
   public String toString() {
-    return new StringJoiner(", ", SpriteAnimationTimingComponent.class.getSimpleName() + "[", "]")
+    return new StringJoiner(", ", Timing.class.getSimpleName() + "[", "]")
         .add("delaysInMs=" + delaysInMs)
         .add("maxSprites=" + maxSprites)
         .add("currentFrame=" + currentFrame)

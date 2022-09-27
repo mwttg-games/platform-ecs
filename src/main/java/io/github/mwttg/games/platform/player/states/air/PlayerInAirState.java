@@ -1,6 +1,6 @@
 package io.github.mwttg.games.platform.player.states.air;
 
-import io.github.mwttg.games.platform.draw.SpriteAnimationComponent;
+import io.github.mwttg.games.platform.draw.Drawable;
 import io.github.mwttg.games.platform.player.PlayerData;
 import io.github.mwttg.games.platform.player.PlayerStateComponent;
 import io.github.mwttg.games.platform.player.effect.PlayerEffectComponent;
@@ -12,12 +12,12 @@ public abstract class PlayerInAirState extends AbstractPlayerState {
 
   private float inAirTime;
 
-  public PlayerInAirState(final Map<String, SpriteAnimationComponent> animationComponentByName,
+  public PlayerInAirState(final Map<String, Drawable> drawableByName,
                           final PlayerStateComponent playerStateComponent,
                           final PlayerEffectComponent playerEffectComponent,
                           final Matrix4f transform,
                           final PlayerData playerData) {
-    super(animationComponentByName, playerStateComponent, playerEffectComponent, transform, playerData);
+    super(drawableByName, playerStateComponent, playerEffectComponent, transform, playerData);
     this.inAirTime = 0.0f;
   }
 

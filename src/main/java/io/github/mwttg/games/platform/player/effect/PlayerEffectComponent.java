@@ -1,6 +1,6 @@
 package io.github.mwttg.games.platform.player.effect;
 
-import io.github.mwttg.games.platform.draw.SpriteAnimationComponent;
+import io.github.mwttg.games.platform.draw.Drawable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -8,15 +8,15 @@ import org.joml.Matrix4f;
 
 public class PlayerEffectComponent {
 
-  private final Map<String, SpriteAnimationComponent> animationComponentByName;
+  private final Map<String, Drawable> animationComponentByName;
   private List<PlayerEffect> effects;
 
-  public PlayerEffectComponent(final Map<String, SpriteAnimationComponent> animationComponentByName) {
+  public PlayerEffectComponent(final Map<String, Drawable> animationComponentByName) {
     this.animationComponentByName = animationComponentByName;
     this.effects = new ArrayList<>();
   }
 
-  public Map<String, SpriteAnimationComponent> getAnimationComponentByName() {
+  public Map<String, Drawable> getAnimationComponentByName() {
     return animationComponentByName;
   }
 

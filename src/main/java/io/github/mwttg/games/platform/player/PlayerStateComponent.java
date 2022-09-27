@@ -1,6 +1,6 @@
 package io.github.mwttg.games.platform.player;
 
-import io.github.mwttg.games.platform.draw.SpriteAnimationComponent;
+import io.github.mwttg.games.platform.draw.Drawable;
 import io.github.mwttg.games.platform.player.effect.PlayerEffectComponent;
 import io.github.mwttg.games.platform.player.states.PlayerState;
 import io.github.mwttg.games.platform.player.states.air.PlayerFallDownLeftState;
@@ -35,26 +35,26 @@ public class PlayerStateComponent {
   private PlayerState previousState;
   private PlayerState currentState;
 
-  public PlayerStateComponent(final Map<String, SpriteAnimationComponent> animationComponentByName,
+  public PlayerStateComponent(final Map<String, Drawable> drawableByName,
                               final PlayerEffectComponent playerEffectComponent,
                               final Matrix4f modelMatrix,
                               final PlayerData playerData) {
-    this.idleLeft = new PlayerIdleLeftState(animationComponentByName, this, playerEffectComponent, modelMatrix, playerData);
-    this.idleRight = new PlayerIdleRightState(animationComponentByName, this, playerEffectComponent, modelMatrix, playerData);
-    this.walkLeft = new PlayerWalkLeftState(animationComponentByName, this, playerEffectComponent, modelMatrix, playerData);
-    this.walkRight = new PlayerWalkRightState(animationComponentByName, this, playerEffectComponent, modelMatrix, playerData);
+    this.idleLeft = new PlayerIdleLeftState(drawableByName, this, playerEffectComponent, modelMatrix, playerData);
+    this.idleRight = new PlayerIdleRightState(drawableByName, this, playerEffectComponent, modelMatrix, playerData);
+    this.walkLeft = new PlayerWalkLeftState(drawableByName, this, playerEffectComponent, modelMatrix, playerData);
+    this.walkRight = new PlayerWalkRightState(drawableByName, this, playerEffectComponent, modelMatrix, playerData);
     this.fallDownLeft =
-        new PlayerFallDownLeftState(animationComponentByName, this, playerEffectComponent, modelMatrix, playerData);
+        new PlayerFallDownLeftState(drawableByName, this, playerEffectComponent, modelMatrix, playerData);
     this.fallDownRight =
-        new PlayerFallDownRightState(animationComponentByName, this, playerEffectComponent, modelMatrix, playerData);
-    this.jumpUpLeft = new PlayerJumpUpLeftState(animationComponentByName, this, playerEffectComponent, modelMatrix, playerData);
+        new PlayerFallDownRightState(drawableByName, this, playerEffectComponent, modelMatrix, playerData);
+    this.jumpUpLeft = new PlayerJumpUpLeftState(drawableByName, this, playerEffectComponent, modelMatrix, playerData);
     this.jumpUpRight =
-        new PlayerJumpUpRightState(animationComponentByName, this, playerEffectComponent, modelMatrix, playerData);
+        new PlayerJumpUpRightState(drawableByName, this, playerEffectComponent, modelMatrix, playerData);
     this.climbUpLadder =
-        new PlayerClimbUpLadder(animationComponentByName, this, playerEffectComponent, modelMatrix, playerData);
+        new PlayerClimbUpLadder(drawableByName, this, playerEffectComponent, modelMatrix, playerData);
     this.slideDownLadder =
-        new PlayerSlideDownLadder(animationComponentByName, this, playerEffectComponent, modelMatrix, playerData);
-    this.idleOnLadder = new PlayerIdleOnLadder(animationComponentByName, this, playerEffectComponent, modelMatrix, playerData);
+        new PlayerSlideDownLadder(drawableByName, this, playerEffectComponent, modelMatrix, playerData);
+    this.idleOnLadder = new PlayerIdleOnLadder(drawableByName, this, playerEffectComponent, modelMatrix, playerData);
 
     this.currentState = idleRight;
     this.previousState = currentState;  // to avoid npe

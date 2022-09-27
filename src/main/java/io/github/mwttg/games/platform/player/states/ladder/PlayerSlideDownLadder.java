@@ -1,6 +1,6 @@
 package io.github.mwttg.games.platform.player.states.ladder;
 
-import io.github.mwttg.games.platform.draw.SpriteAnimationComponent;
+import io.github.mwttg.games.platform.draw.Drawable;
 import io.github.mwttg.games.platform.input.PlayerInput;
 import io.github.mwttg.games.platform.player.FacingDirection;
 import io.github.mwttg.games.platform.player.PlayerData;
@@ -14,12 +14,11 @@ import org.joml.Matrix4f;
 
 public final class PlayerSlideDownLadder extends PlayerOnLadderState {
 
-  public PlayerSlideDownLadder(
-      final Map<String, SpriteAnimationComponent> animationComponentByName,
-      final PlayerStateComponent playerStateComponent,
-      final PlayerEffectComponent playerEffectComponent,
-      final Matrix4f transform, final PlayerData playerData) {
-    super(animationComponentByName, playerStateComponent, playerEffectComponent, transform, playerData);
+  public PlayerSlideDownLadder(final Map<String, Drawable> drawableByName,
+                               final PlayerStateComponent playerStateComponent,
+                               final PlayerEffectComponent playerEffectComponent,
+                               final Matrix4f transform, final PlayerData playerData) {
+    super(drawableByName, playerStateComponent, playerEffectComponent, transform, playerData);
   }
 
   @Override

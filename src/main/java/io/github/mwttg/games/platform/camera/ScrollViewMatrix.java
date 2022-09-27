@@ -1,6 +1,6 @@
 package io.github.mwttg.games.platform.camera;
 
-import io.github.mwttg.games.platform.level.LevelComponent;
+import io.github.mwttg.games.platform.world.Scene;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 
@@ -11,8 +11,8 @@ public final class ScrollViewMatrix {
   private ScrollViewMatrix() {
   }
 
-  public static Matrix4f get(final Matrix4f transform, final LevelComponent levelComponent) {
-    final var dimension = levelComponent.dimension();
+  public static Matrix4f get(final Matrix4f transform, final Scene scene) {
+    final var dimension = scene.dimension();
     transform.getTranslation(BUFFER);
 
     final float cameraX;

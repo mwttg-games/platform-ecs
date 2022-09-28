@@ -15,7 +15,7 @@ import java.util.Map;
  */
 public record PlayerDefinition(TileSize tileSize, Map<String, AnimationDefinition> animations) {
 
-  public record AnimationDefinition(int frames, String spriteSheet, List<Integer> timings) {
+  public record AnimationDefinition(String spriteSheet, int frames, List<Integer> timings) {
   }
 
   public static Map<String, Drawable> createDrawablesByName(final String filename) {

@@ -13,4 +13,5 @@ public interface Configuration {
   int PLAYER_MAX_JUMP_AMOUNT = 2;
   float COYOTE_TIME = 0.1f;
   float THIN_PLATFORM_LOCK = 0.2f; // time in s
+  float DELAY_DEATH_TIME = 1.0f; // time in s
 }

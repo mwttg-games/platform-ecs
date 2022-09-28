@@ -18,6 +18,7 @@ public interface PlayerState {
   String CLIMB_LADDER_UP = "CLIMB_LADDER_UP";
   String SLIDE_LADDER_DOWN = "SLIDE_LADDER_DOWN";
   String DUST_EFFECT = "DUST_EFFECT";
+  String DEAD = "DEAD";
 
   void enter();
 

@@ -8,6 +8,8 @@ import io.github.mwttg.games.platform.player.states.air.PlayerFallDownRightState
 import io.github.mwttg.games.platform.player.states.air.PlayerInAirState;
 import io.github.mwttg.games.platform.player.states.air.PlayerJumpUpLeftState;
 import io.github.mwttg.games.platform.player.states.air.PlayerJumpUpRightState;
+import io.github.mwttg.games.platform.player.states.dead.PlayerDeadState;
+import io.github.mwttg.games.platform.player.states.dead.PlayerReviveState;
 import io.github.mwttg.games.platform.player.states.ground.PlayerIdleLeftState;
 import io.github.mwttg.games.platform.player.states.ground.PlayerIdleRightState;
 import io.github.mwttg.games.platform.player.states.ground.PlayerWalkLeftState;
@@ -31,6 +33,8 @@ public class PlayerStateComponent {
   private final PlayerClimbUpLadder climbUpLadder;
   private final PlayerSlideDownLadder slideDownLadder;
   private final PlayerIdleOnLadder idleOnLadder;
+  private final PlayerDeadState dead;
+  private final PlayerReviveState revive;
 
   private PlayerState previousState;
   private PlayerState currentState;
@@ -55,6 +59,8 @@ public class PlayerStateComponent {
     this.slideDownLadder =
         new PlayerSlideDownLadder(drawableByName, this, playerEffectComponent, modelMatrix, playerData);
     this.idleOnLadder = new PlayerIdleOnLadder(drawableByName, this, playerEffectComponent, modelMatrix, playerData);
+    this.dead = new PlayerDeadState(drawableByName, this, playerEffectComponent, modelMatrix, playerData);
+    this.revive = new PlayerReviveState(drawableByName, this, playerEffectComponent, modelMatrix, playerData);
 
     this.currentState = idleRight;
     this.previousState = currentState;  // to avoid npe
@@ -126,6 +132,16 @@ public class PlayerStateComponent {
 
   public void switchToSlideDownLadderState() {
     updateState(slideDownLadder);
+  }
+
+  public void switchToDeadState() {
+    if (!(currentState instanceof PlayerDeadState)) {
+      updateState(dead);
+    }
+  }
+
+  public void switchToReviveState() {
+    updateState(revive);
   }
 
   private void updateState(final PlayerState newState) {

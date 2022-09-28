@@ -17,7 +17,7 @@ public class SceneChangeSystem {
     for (final Rectanglef box : connectorBoxes) {
       if (box.intersectsRectangle(playerBox)) {
         final var destination = connections.get(box);
-        world.changeScene(destination);
+        world.changeScene(destination.sceneId());
 
         final var x = destination.spawnPosition().x();
         final var y = destination.spawnPosition().y();

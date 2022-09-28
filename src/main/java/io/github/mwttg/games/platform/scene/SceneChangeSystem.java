@@ -1,4 +1,4 @@
-package io.github.mwttg.games.platform.world;
+package io.github.mwttg.games.platform.scene;
 
 import io.github.mwttg.games.platform.entity.PlayerEntity;
 import io.github.mwttg.games.platform.entity.WorldEntity;

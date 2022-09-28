@@ -1,9 +1,9 @@
 package io.github.mwttg.games.platform.entity;
 
-import io.github.mwttg.games.platform.world.Destination;
-import io.github.mwttg.games.platform.world.Scene;
-import io.github.mwttg.games.platform.world.SceneChangeSystem;
-import io.github.mwttg.games.platform.world.SceneId;
+import io.github.mwttg.games.platform.scene.Destination;
+import io.github.mwttg.games.platform.scene.Scene;
+import io.github.mwttg.games.platform.scene.SceneChangeSystem;
+import io.github.mwttg.games.platform.scene.SceneId;
 import java.util.Map;
 import org.joml.Matrix4f;
 

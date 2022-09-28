@@ -1,4 +1,4 @@
-package io.github.mwttg.games.platform.world;
+package io.github.mwttg.games.platform.scene;
 
 import io.github.mwttg.games.platform.camera.CameraType;
 import io.github.mwttg.games.platform.draw.Drawable;

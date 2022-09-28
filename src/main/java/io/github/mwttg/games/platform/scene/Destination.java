@@ -1,4 +1,4 @@
-package io.github.mwttg.games.platform.world;
+package io.github.mwttg.games.platform.scene;
 
 import org.joml.Vector2f;
 

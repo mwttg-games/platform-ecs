@@ -1,4 +1,4 @@
-package io.github.mwttg.games.platform.world;
+package io.github.mwttg.games.platform.scene;
 
 import io.github.mwttg.games.basic.utilities.files.JsonFile;
 import io.github.mwttg.games.opengl.basic.utilities.texture.Texture;

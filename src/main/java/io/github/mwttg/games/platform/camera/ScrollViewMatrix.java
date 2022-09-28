@@ -1,6 +1,6 @@
 package io.github.mwttg.games.platform.camera;
 
-import io.github.mwttg.games.platform.world.Scene;
+import io.github.mwttg.games.platform.scene.Scene;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 

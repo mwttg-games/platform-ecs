@@ -23,12 +23,9 @@ public record AnimatedSprite(Sprite spriteFrames, Timing timing) implements Draw
   public void draw(final Matrix4f model, final Matrix4f view, final Matrix4f projection) {
     GL41.glBindVertexArray(spriteFrames.vertexArrayObjectId());
     GL41.glUseProgram(spriteFrames().shaderProgramId());
-    Drawable.enableVertexAttribArray();
     spriteFrames.uniforms().upload(model, view, projection, spriteFrames().textureId());
 
     final var first = getFirstVertexOfCurrentSpriteFrame();
     GL41.glDrawArrays(GL41.GL_TRIANGLES, first, 6);
-
-    Drawable.disableVertexAttribArray();
   }
 }

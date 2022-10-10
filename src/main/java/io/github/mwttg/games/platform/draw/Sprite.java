@@ -24,9 +24,7 @@ public record Sprite(int vertexArrayObjectId,
   public void draw(final Matrix4f model, final Matrix4f view, final Matrix4f projection) {
     GL41.glBindVertexArray(vertexArrayObjectId);
     GL41.glUseProgram(shaderProgramId);
-    Drawable.enableVertexAttribArray();
     uniforms.upload(model, view, projection, textureId);
     GL41.glDrawArrays(GL41.GL_TRIANGLES, 0, 6);
-    Drawable.disableVertexAttribArray();
   }
 }
